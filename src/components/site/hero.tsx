@@ -8,6 +8,10 @@ export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden">
       <AsciiBackground />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(62%_72%_at_30%_50%,rgba(0,0,0,0.6),transparent_72%)]"
+      />
       <Container className="relative flex min-h-[92svh] flex-col justify-center pt-28 pb-16">
         <Reveal>
           <div className="flex flex-wrap items-center gap-3">

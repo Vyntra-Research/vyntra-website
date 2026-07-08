@@ -13,7 +13,7 @@ function smooth(t: number): number {
   return t * t * (3 - 2 * t);
 }
 
-function renderPattern(w: number, h: number): string {
+function renderPattern(w: number, h: number, boost = 1): string {
   const canvas = document.createElement("canvas");
   canvas.width = w;
   canvas.height = h;
@@ -59,7 +59,7 @@ function renderPattern(w: number, h: number): string {
       const n = fbm(x / FEATURE, y / FEATURE);
       if (n < VOID_THRESHOLD) continue;
       const t = (n - VOID_THRESHOLD) / span;
-      const alpha = 0.08 + t * 0.62;
+      const alpha = Math.min(1, (0.08 + t * 0.62) * boost);
       const ch = CHARS[(Math.random() * CHARS.length) | 0];
       ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
       ctx.fillText(ch, x, y);
@@ -70,7 +70,8 @@ function renderPattern(w: number, h: number): string {
 
 export function AsciiBackground() {
   const ref = useRef<HTMLDivElement>(null);
-  const [bg, setBg] = useState("");
+  const [bgBase, setBgBase] = useState("");
+  const [bgWave, setBgWave] = useState("");
 
   useEffect(() => {
     const el = ref.current;
@@ -79,7 +80,10 @@ export function AsciiBackground() {
     const draw = () => {
       const w = el.clientWidth;
       const h = el.clientHeight;
-      if (w && h) setBg(renderPattern(w, h));
+      if (w && h) {
+        setBgBase(renderPattern(w, h, 1));
+        setBgWave(renderPattern(w, h, 1.2));
+      }
     };
     const ro = new ResizeObserver(() => {
       cancelAnimationFrame(raf);
@@ -103,15 +107,15 @@ export function AsciiBackground() {
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage: bg ? `url(${bg})` : undefined,
-          opacity: 0.22,
+          backgroundImage: bgBase ? `url(${bgBase})` : undefined,
+          opacity: 0.4,
         }}
       />
       <div
         className="vyntra-wave absolute inset-0"
         style={{
-          backgroundImage: bg ? `url(${bg})` : undefined,
-          opacity: 0.72,
+          backgroundImage: bgWave ? `url(${bgWave})` : undefined,
+          opacity: 1,
         }}
       />
     </div>

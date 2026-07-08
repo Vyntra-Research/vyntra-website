@@ -143,15 +143,15 @@
     --wave-x: -55%;
     -webkit-mask-image: radial-gradient(
       ellipse 46% 96% at var(--wave-x) 50%,
-      #000 0%,
-      rgba(0, 0, 0, 0.55) 42%,
-      transparent 76%
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0.4) 38%,
+      transparent 78%
     );
     mask-image: radial-gradient(
       ellipse 46% 96% at var(--wave-x) 50%,
-      #000 0%,
-      rgba(0, 0, 0, 0.55) 42%,
-      transparent 76%
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0.4) 38%,
+      transparent 78%
     );
     animation: vyntra-wave 5s linear infinite;
   }
