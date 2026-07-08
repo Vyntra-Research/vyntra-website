@@ -133,6 +133,39 @@
     );
   }
 
+  /* ASCII hero background — a single, broad wave sweeping right */
+  @property --wave-x {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: -55%;
+  }
+  .vyntra-wave {
+    --wave-x: -55%;
+    -webkit-mask-image: radial-gradient(
+      ellipse 46% 96% at var(--wave-x) 50%,
+      #000 0%,
+      rgba(0, 0, 0, 0.55) 42%,
+      transparent 76%
+    );
+    mask-image: radial-gradient(
+      ellipse 46% 96% at var(--wave-x) 50%,
+      #000 0%,
+      rgba(0, 0, 0, 0.55) 42%,
+      transparent 76%
+    );
+    animation: vyntra-wave 5s linear infinite;
+  }
+  @keyframes vyntra-wave {
+    to {
+      --wave-x: 156%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vyntra-wave {
+      animation: none;
+    }
+  }
+
   /* Reveal-on-scroll wrapper */
   .reveal {
     opacity: 0;
