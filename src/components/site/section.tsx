@@ -1,0 +1,64 @@
+import { cn } from "@/lib/utils";
+
+export function Container({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn("mx-auto w-full max-w-[1240px] px-6 md:px-10", className)}>
+      {children}
+    </div>
+  );
+}
+
+export function Section({
+  id,
+  children,
+  className,
+}: {
+  id?: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <section
+      id={id}
+      className={cn("relative border-t border-line scroll-mt-16", className)}
+    >
+      {children}
+    </section>
+  );
+}
+
+export function SectionHeader({
+  index,
+  eyebrow,
+  title,
+  children,
+}: {
+  index: string;
+  eyebrow: string;
+  title: React.ReactNode;
+  children?: React.ReactNode;
+}) {
+  return (
+    <div className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-12">
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-3">
+          <span className="text-ink-muted text-xs tabular-nums">{index}</span>
+          <span className="h-px w-8 bg-line-strong" />
+          <span className="eyebrow">{eyebrow}</span>
+        </div>
+      </div>
+      <div className="flex flex-col gap-6">
+        <h2 className="max-w-2xl text-balance text-2xl leading-[1.15] font-medium md:text-4xl">
+          {title}
+        </h2>
+        {children}
+      </div>
+    </div>
+  );
+}
