@@ -79,7 +79,33 @@ export function Precificacao() {
         </Reveal>
 
         {/* Continuous plans */}
-        <div className="mt-px grid gap-px bg-line lg:grid-cols-3">
+        <Reveal>
+          <div className="mt-14 flex flex-col gap-3 border-t border-line pt-10 md:flex-row md:items-end md:justify-between">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <span className="text-[0.65rem] uppercase tracking-[0.22em] text-ink-muted">
+                  Assíncrono
+                </span>
+                <span className="h-px w-6 bg-line-strong" />
+                <span className="text-[0.65rem] uppercase tracking-[0.22em] text-ink-muted">
+                  Contínuo
+                </span>
+              </div>
+              <h3 className="text-xl font-medium text-ink md:text-2xl">
+                Pentest contínuo / assíncrono
+              </h3>
+              <p className="max-w-md text-xs leading-relaxed text-ink-dim">
+                Assinatura mensal com um pentest a cada 30 dias. Escolha o plano
+                pelo porte do escopo.
+              </p>
+            </div>
+            <span className="text-[0.6rem] uppercase tracking-[0.2em] text-ink-muted">
+              Planos
+            </span>
+          </div>
+        </Reveal>
+
+        <div className="mt-8 grid gap-px bg-line lg:grid-cols-3">
           {PLANS.map((p, i) => (
             <Reveal key={p.name} delay={`${i * 80}ms`}>
               <div

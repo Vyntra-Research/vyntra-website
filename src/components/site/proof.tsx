@@ -45,15 +45,15 @@ export function Proof() {
             </p>
           </div>
         </Reveal>
-      </Container>
 
-      <div className="marquee-edges relative overflow-hidden border-y border-line py-6">
-        <div className="marquee-track flex w-max">
-          {loop.map((c, i) => (
-            <CaseItem key={`${c.key}-${i}`} c={c} />
-          ))}
+        <div className="marquee-edges relative mt-10 overflow-hidden border-y border-line py-6">
+          <div className="marquee-track flex w-max">
+            {loop.map((c, i) => (
+              <CaseItem key={`${c.key}-${i}`} c={c} />
+            ))}
+          </div>
         </div>
-      </div>
+      </Container>
     </Section>
   );
 }
