@@ -23,8 +23,8 @@ export function Footer() {
           <div className="flex flex-col gap-5">
             <Logo />
             <p className="max-w-xs text-xs leading-relaxed text-ink-dim">
-              Segurança ofensiva orientada por pesquisa. Pentest de nível de
-              pesquisa, acessível e com garantia de retorno.
+              Pentest e pesquisa de segurança. De alto nível, acessível e com
+              garantia de retorno.
             </p>
           </div>
 

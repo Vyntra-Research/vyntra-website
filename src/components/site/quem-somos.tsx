@@ -6,7 +6,7 @@ const PILLARS = [
   {
     n: "I",
     title: "Orientada por pesquisa",
-    desc: "Metodologia de pesquisa ofensiva aplicada a escopos reais de produto.",
+    desc: "Metodologia de pesquisa profunda aplicada a escopos reais de produto.",
   },
   {
     n: "II",
@@ -41,13 +41,12 @@ export function QuemSomos() {
           eyebrow="Quem somos"
           title={
             <>
-              Segurança ofensiva orientada por{" "}
-              <Highlight>pesquisa</Highlight>.
+              Pesquisa que encontra <Highlight>falhas reais</Highlight>.
             </>
           }
         >
           <p className="max-w-xl text-sm leading-relaxed text-ink-dim">
-            A Vyntra nasce da pesquisa ofensiva que encontrou{" "}
+            A Vyntra nasce da pesquisa que encontrou{" "}
             <Highlight>CVEs</Highlight> e vulnerabilidades em empresas como
             GitHub, GitLab, AT&T, Mozilla e Vercel. O objetivo é tornar o
             pentest mais <Highlight>acessível</Highlight>, prático e

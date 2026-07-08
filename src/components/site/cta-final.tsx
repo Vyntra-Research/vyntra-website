@@ -23,9 +23,8 @@ export function CtaFinal() {
         <Reveal delay="160ms">
           <p className="max-w-xl text-sm leading-relaxed text-ink-dim md:text-base">
             Orçamento automático e transparente na hora. Nossa equipe confirma
-            os detalhes e fica disponível do início ao fim — previsível, sem
-            burocracia. Pentest de nível de pesquisa ofensiva, acessível e com
-            suporte direto.
+            os detalhes e fica disponível do início ao fim — previsível e
+            prático. Pentest de alto nível, acessível e com suporte direto.
           </p>
         </Reveal>
         <Reveal delay="240ms">

@@ -42,8 +42,8 @@ export function Precificacao() {
           <p className="max-w-xl text-sm leading-relaxed text-ink-dim">
             O orçamento sai automaticamente a partir do porte do escopo —
             pequeno, médio ou grande. Depois nossa equipe confirma as
-            informações e fica disponível ao longo de todo o processo. Sem
-            burocracia de orçamento, com previsibilidade e confiabilidade. O
+            informações e fica disponível ao longo de todo o processo. Prático
+            do orçamento à execução, com previsibilidade e confiabilidade. O
             pentest contínuo tem valor mensal abaixo do equivalente dedicado.
           </p>
         </SectionHeader>
