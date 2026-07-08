@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from "react";
 const CHARS = "01/\\|+-*><.,:=#%&";
 const CELL = 9;
 const FONT_PX = 8;
-const FEATURE = 140;
-const VOID_THRESHOLD = 0.46;
+const FEATURE = 150;
+const OCTAVES = 4;
+const VOID_THRESHOLD = 0.47;
 
 function smooth(t: number): number {
   return t * t * (3 - 2 * t);
@@ -21,34 +22,46 @@ function renderPattern(w: number, h: number): string {
   ctx.font = `${FONT_PX}px "JetBrains Mono", ui-monospace, monospace`;
   ctx.textBaseline = "top";
 
-  const cols = Math.ceil(w / FEATURE) + 2;
-  const rows = Math.ceil(h / FEATURE) + 2;
-  const seed = new Float32Array(cols * rows);
-  for (let i = 0; i < seed.length; i++) seed[i] = Math.random();
+  const hash = (ix: number, iy: number) => {
+    const s = Math.sin(ix * 127.1 + iy * 311.7) * 43758.5453;
+    return s - Math.floor(s);
+  };
   const noiseAt = (fx: number, fy: number) => {
     const x0 = Math.floor(fx);
     const y0 = Math.floor(fy);
     const sx = smooth(fx - x0);
     const sy = smooth(fy - y0);
-    const a = seed[y0 * cols + x0];
-    const b = seed[y0 * cols + x0 + 1];
-    const c = seed[(y0 + 1) * cols + x0];
-    const d = seed[(y0 + 1) * cols + x0 + 1];
+    const a = hash(x0, y0);
+    const b = hash(x0 + 1, y0);
+    const c = hash(x0, y0 + 1);
+    const d = hash(x0 + 1, y0 + 1);
     const top = a + (b - a) * sx;
     const bot = c + (d - c) * sx;
     return top + (bot - top) * sy;
   };
+  const fbm = (x: number, y: number) => {
+    let total = 0;
+    let amp = 1;
+    let freq = 1;
+    let norm = 0;
+    for (let o = 0; o < OCTAVES; o++) {
+      total += noiseAt(x * freq, y * freq) * amp;
+      norm += amp;
+      amp *= 0.5;
+      freq *= 2;
+    }
+    return total / norm;
+  };
+  const span = 1 - VOID_THRESHOLD;
 
   for (let y = 0; y < h; y += CELL) {
     for (let x = 0; x < w; x += CELL) {
-      const fx = x / FEATURE;
-      const fy = y / FEATURE;
-      const n = noiseAt(fx, fy) * 0.72 + noiseAt(fx * 2.3, fy * 2.3) * 0.28;
+      const n = fbm(x / FEATURE, y / FEATURE);
       if (n < VOID_THRESHOLD) continue;
-      const fill = 0.55 + ((n - VOID_THRESHOLD) / (1 - VOID_THRESHOLD)) * 0.4;
-      if (Math.random() > fill) continue;
+      const t = (n - VOID_THRESHOLD) / span;
+      const alpha = 0.08 + t * 0.62;
       const ch = CHARS[(Math.random() * CHARS.length) | 0];
-      ctx.fillStyle = `rgba(255,255,255,${0.5 + Math.random() * 0.5})`;
+      ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
       ctx.fillText(ch, x, y);
     }
   }
@@ -91,14 +104,14 @@ export function AsciiBackground() {
         className="absolute inset-0"
         style={{
           backgroundImage: bg ? `url(${bg})` : undefined,
-          opacity: 0.13,
+          opacity: 0.22,
         }}
       />
       <div
         className="vyntra-wave absolute inset-0"
         style={{
           backgroundImage: bg ? `url(${bg})` : undefined,
-          opacity: 0.5,
+          opacity: 0.72,
         }}
       />
     </div>
