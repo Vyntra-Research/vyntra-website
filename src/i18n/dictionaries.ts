@@ -168,7 +168,7 @@ const pt = {
     ctaSecondary: "Falar com a gente",
   },
   footer: {
-    desc: "Pentest e pesquisa de segurança. De alto nível, acessível e com garantia de retorno.",
+    desc: "Pentest e pesquisa de segurança.",
     navLabel: "Navegação",
     navModalidades: "Modalidades",
     navQuemSomos: "Quem somos",
@@ -369,7 +369,7 @@ const en: Dict = {
     ctaSecondary: "Talk to us",
   },
   footer: {
-    desc: "Pentest and security research. High-level, accessible, with a return guarantee.",
+    desc: "Pentest and security research.",
     navLabel: "Navigation",
     navModalidades: "Engagements",
     navQuemSomos: "About",
