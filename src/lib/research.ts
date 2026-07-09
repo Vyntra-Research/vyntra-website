@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { Locale } from "@/i18n/config";
 
 export type ResearchPost = {
   slug: string;
@@ -11,8 +12,11 @@ export type ResearchPost = {
   readingTime: number;
 };
 
-const CONTENT_DIR = path.join(process.cwd(), "src", "content", "research");
 const SEP = /^-{3,}\s*$/;
+
+function contentDir(lang: Locale): string {
+  return path.join(process.cwd(), "src", "content", "research", lang);
+}
 
 function slugify(input: string): string {
   return input
@@ -23,7 +27,9 @@ function slugify(input: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-type ParsedMeta = Pick<ResearchPost, "title" | "subtitle" | "author" | "date">;
+type ParsedMeta = Pick<ResearchPost, "title" | "subtitle" | "author" | "date"> & {
+  slugOverride?: string;
+};
 
 function parseMeta(block: string): ParsedMeta {
   const lines = block
@@ -35,6 +41,7 @@ function parseMeta(block: string): ParsedMeta {
   let subtitle = "";
   let author = "";
   let date: string | null = null;
+  let slugOverride: string | undefined;
 
   for (const line of lines) {
     const h = line.match(/^#\s+(.+)$/);
@@ -52,10 +59,15 @@ function parseMeta(block: string): ParsedMeta {
       date = d[1];
       continue;
     }
+    const sl = line.match(/^slug:\s*(.+)$/);
+    if (sl) {
+      slugOverride = sl[1].trim();
+      continue;
+    }
     if (!subtitle) subtitle = line;
   }
 
-  return { title, subtitle, author, date };
+  return { title, subtitle, author, date, slugOverride };
 }
 
 function parse(raw: string): ResearchPost {
@@ -87,19 +99,27 @@ function parse(raw: string): ResearchPost {
   const title = meta.title || "Sem título";
   const wordCount = body.trim().split(/\s+/).filter(Boolean).length;
   const readingTime = Math.max(1, Math.round(wordCount / 200));
+  const slug = meta.slugOverride || slugify(title);
 
-  return { ...meta, title, slug: slugify(title), body, readingTime };
+  return {
+    title,
+    subtitle: meta.subtitle,
+    author: meta.author,
+    date: meta.date,
+    slug,
+    body,
+    readingTime,
+  };
 }
 
-export function getAllPosts(): ResearchPost[] {
-  if (!fs.existsSync(CONTENT_DIR)) return [];
-  const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".md"));
-  const posts = files.map((f) =>
-    parse(fs.readFileSync(path.join(CONTENT_DIR, f), "utf8")),
-  );
+export function getAllPosts(lang: Locale): ResearchPost[] {
+  const dir = contentDir(lang);
+  if (!fs.existsSync(dir)) return [];
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md"));
+  const posts = files.map((f) => parse(fs.readFileSync(path.join(dir, f), "utf8")));
   return posts.sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
 }
 
-export function getPostBySlug(slug: string): ResearchPost | null {
-  return getAllPosts().find((p) => p.slug === slug) ?? null;
+export function getPostBySlug(slug: string, lang: Locale): ResearchPost | null {
+  return getAllPosts(lang).find((p) => p.slug === slug) ?? null;
 }

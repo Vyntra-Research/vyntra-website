@@ -2,44 +2,36 @@ import { Container, Section, SectionHeader } from "./section";
 import { Reveal } from "./reveal";
 import { ContactForm } from "./contact-form";
 import { Highlight } from "./highlight";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-export function Contato() {
+export function Contato({ t }: { t: Dictionary["contato"] }) {
   return (
     <Section id="contato">
       <Container className="py-20 md:py-28">
-        <SectionHeader
-          index="05"
-          eyebrow="Contato"
-          title={
-            <>
-              Tire dúvidas <Highlight>técnicas</Highlight> antes de iniciar.
-            </>
-          }
-        >
+        <SectionHeader index={t.index} eyebrow={t.eyebrow} title={
+          <>
+            {t.titlePre} <Highlight>{t.titleHighlight}</Highlight> {t.titlePost}
+          </>
+        }>
           <p className="max-w-xl text-sm leading-relaxed text-ink-dim">
-            Fale com a gente para tirar dúvidas técnicas, entender qual
-            modalidade faz sentido e alinhar o escopo antes de começar.
+            {t.subhead}
           </p>
         </SectionHeader>
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <Reveal>
-            <ContactForm />
+            <ContactForm t={t.form} />
           </Reveal>
           <Reveal delay="120ms">
             <div className="flex h-full flex-col justify-between gap-8 border border-line bg-surface p-8">
               <div className="flex flex-col gap-6">
-                <Channel label="E-mail" value="contact@vyntra.sh" />
-                <Channel label="Resposta" value="Até 1 dia útil" />
-                <Channel
-                  label="PGP"
-                  value="Disponível sob solicitação"
-                />
+                <Channel label={t.channels.email.label} value={t.channels.email.value} />
+                <Channel label={t.channels.response.label} value={t.channels.response.value} />
+                <Channel label={t.channels.pgp.label} value={t.channels.pgp.value} />
               </div>
               <div className="border-t border-line pt-6">
                 <p className="text-xs leading-relaxed text-ink-muted">
-                  Tratamos informações de escopo com sigilo. Dados sensíveis
-                  podem ser enviados por canal seguro após o primeiro contato.
+                  {t.disclaimer}
                 </p>
               </div>
             </div>

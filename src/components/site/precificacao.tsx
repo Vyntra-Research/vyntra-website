@@ -2,124 +2,88 @@ import { Container, Section, SectionHeader } from "./section";
 import { Reveal } from "./reveal";
 import { HexButton } from "./hex-button";
 import { Highlight } from "./highlight";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-const PLANS = [
-  {
-    name: "Lite",
-    for: "Escopo pequeno",
-    desc: "Assets únicos de pequeno porte que precisam de análise recorrente.",
-    points: ["1 asset pequeno", "Pentest a cada 30 dias", "Relatório por ciclo"],
-  },
-  {
-    name: "Plus",
-    for: "Escopo médio",
-    desc: "Equilíbrio entre cobertura e custo para produtos em crescimento.",
-    points: ["Até 3 assets pequenos", "ou 1 asset médio", "Pentest a cada 30 dias"],
-    featured: true,
-  },
-  {
-    name: "Harden",
-    for: "Escopo grande",
-    desc: "Cobertura ampliada para produtos com maior superfície de ataque.",
-    points: ["Alvos maiores", "Cobertura ampliada", "Pentest a cada 30 dias"],
-  },
-];
-
-export function Precificacao() {
+export function Precificacao({ t }: { t: Dictionary["precificacao"] }) {
   return (
     <Section id="precificacao">
       <Container className="py-20 md:py-28">
-        <SectionHeader
-          index="04"
-          eyebrow="Precificação"
-          title={
-            <>
-              Preço transparente. Você cadastra o escopo e recebe o orçamento{" "}
-              <Highlight>na hora</Highlight>.
-            </>
-          }
-        >
+        <SectionHeader index={t.index} eyebrow={t.eyebrow} title={
+          <>
+            {t.titlePre} <Highlight>{t.titleHighlight}</Highlight> {t.titlePost}
+          </>
+        }>
           <p className="max-w-xl text-sm leading-relaxed text-ink-dim">
-            O orçamento sai automaticamente a partir do porte do escopo —
-            pequeno, médio ou grande. Depois nossa equipe confirma as
-            informações e fica disponível ao longo de todo o processo. Prático
-            do orçamento à execução, com previsibilidade e confiabilidade. O
-            pentest contínuo tem valor mensal abaixo do equivalente dedicado.
+            {t.subhead}
           </p>
         </SectionHeader>
 
-        {/* Dedicated */}
         <Reveal>
           <div className="mt-14 flex flex-col gap-8 border border-line bg-surface p-8 md:flex-row md:items-center md:justify-between md:p-10">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <span className="text-[0.65rem] uppercase tracking-[0.22em] text-ink-muted">
-                  Síncrono
+                  {t.dedicated.tag1}
                 </span>
                 <span className="h-px w-6 bg-line-strong" />
                 <span className="text-[0.65rem] uppercase tracking-[0.22em] text-ink-muted">
-                  Dedicado
+                  {t.dedicated.tag2}
                 </span>
               </div>
               <h3 className="text-2xl font-medium text-ink md:text-3xl">
-                Pentest dedicado / síncrono
+                {t.dedicated.title}
               </h3>
               <p className="max-w-md text-sm leading-relaxed text-ink-dim">
-                Execução focada sobre um escopo definido, com entrega de
-                relatório. Garantia de retorno: dinheiro de volta ou desconto.
+                {t.dedicated.desc}
               </p>
             </div>
             <div className="flex flex-col items-start gap-4 md:items-end">
-              <span className="text-sm text-ink-dim">
-                Preço por porte do escopo
-              </span>
-              <HexButton href="#iniciar" comingSoon>Cadastrar escopo</HexButton>
+              <span className="text-sm text-ink-dim">{t.dedicated.price}</span>
+              <HexButton href="#iniciar" comingSoon>{t.dedicated.cta}</HexButton>
             </div>
           </div>
         </Reveal>
 
-        {/* Continuous plans */}
         <Reveal>
           <div className="mt-14 flex flex-col gap-3 border-t border-line pt-10 md:flex-row md:items-end md:justify-between">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3">
                 <span className="text-[0.65rem] uppercase tracking-[0.22em] text-ink-muted">
-                  Assíncrono
+                  {t.continuous.tag1}
                 </span>
                 <span className="h-px w-6 bg-line-strong" />
                 <span className="text-[0.65rem] uppercase tracking-[0.22em] text-ink-muted">
-                  Contínuo
+                  {t.continuous.tag2}
                 </span>
               </div>
               <h3 className="text-xl font-medium text-ink md:text-2xl">
-                Pentest contínuo / assíncrono
+                {t.continuous.title}
               </h3>
               <p className="max-w-md text-xs leading-relaxed text-ink-dim">
-                Assinatura mensal com um pentest a cada 30 dias. Escolha o plano
-                pelo porte do escopo.
+                {t.continuous.desc}
               </p>
             </div>
             <span className="text-[0.6rem] uppercase tracking-[0.2em] text-ink-muted">
-              Planos
+              {t.plansLabel}
             </span>
           </div>
         </Reveal>
 
         <div className="mt-8 grid gap-px bg-line lg:grid-cols-3">
-          {PLANS.map((p, i) => (
+          {t.plans.map((p, i) => (
             <Reveal key={p.name} delay={`${i * 80}ms`}>
               <div
                 className={`flex h-full flex-col gap-6 border border-transparent p-8 md:p-9 ${
-                  p.featured ? "bg-surface-2" : "bg-base"
+                  p.name === "Plus" ? "bg-surface-2" : "bg-base"
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <h4 className="text-xl font-medium tracking-tight text-ink">
                     {p.name}
                   </h4>
-                  {p.featured && (
+                  {p.name === "Plus" && (
                     <span className="border border-line-strong px-2 py-1 text-[0.6rem] uppercase tracking-[0.2em] text-ink-dim">
-                      Popular
+                      {t.popular}
                     </span>
                   )}
                 </div>
@@ -140,7 +104,7 @@ export function Precificacao() {
                     </li>
                   ))}
                 </ul>
-                <span className="text-xs text-ink-muted">Mensal · contínuo</span>
+                <span className="text-xs text-ink-muted">{t.planFooter}</span>
               </div>
             </Reveal>
           ))}
@@ -148,12 +112,9 @@ export function Precificacao() {
 
         <Reveal>
           <div className="mt-8 flex flex-col gap-3 border border-line bg-base p-6 text-xs leading-relaxed text-ink-muted sm:flex-row sm:items-center sm:justify-between">
-            <span>
-              Valor calculado na hora pelos critérios do escopo. Confirmamos as
-              informações e acompanhamos cada etapa com você.
-            </span>
+            <span>{t.note}</span>
             <HexButton href="#iniciar" variant="ghost" className="px-5 py-2.5 text-[0.6rem]" comingSoon>
-              Ver meu orçamento →
+              {t.noteCta}
             </HexButton>
           </div>
         </Reveal>

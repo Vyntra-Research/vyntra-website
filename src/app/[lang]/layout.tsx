@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
+import { locales, defaultLocale, htmlLang, isLocale } from "@/i18n/config";
+import { HashScroll } from "@/components/site/hash-scroll";
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
@@ -30,15 +32,35 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     siteName: "Vyntra Security",
   },
+  alternates: {
+    languages: {
+      "pt-BR": "/pt",
+      en: "/en",
+    },
+  },
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
+export default async function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  const locale = isLocale(lang) ? lang : defaultLocale;
   return (
-    <html lang="pt-BR" className={`${jetbrains.variable} antialiased`}>
+    <html
+      lang={htmlLang(locale)}
+      className={`${jetbrains.variable} antialiased`}
+    >
       <body className="min-h-dvh bg-base text-ink selection:bg-ink selection:text-black">
+        <HashScroll />
         {children}
       </body>
     </html>

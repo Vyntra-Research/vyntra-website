@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Container, Section } from "./section";
 import { Reveal } from "./reveal";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 const COMPANIES = [
   { key: "github", name: "GitHub" },
@@ -26,7 +27,7 @@ function CaseItem({ c }: { c: { key: string; name: string } }) {
   );
 }
 
-export function Proof() {
+export function Proof({ t }: { t: Dictionary["proof"] }) {
   const loop = [...COMPANIES, ...COMPANIES];
   return (
     <Section id="proof">
@@ -35,13 +36,10 @@ export function Proof() {
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <span className="h-px w-8 bg-line-strong" />
-              <span className="eyebrow">Empresas onde encontramos vulnerabilidades</span>
+              <span className="eyebrow">{t.eyebrow}</span>
             </div>
             <p className="max-w-2xl text-sm leading-relaxed text-ink-dim">
-              Grandes empresas de tecnologia onde nossos pesquisadores já
-              encontraram falhas e reportaram <span className="text-ink">CVEs</span>{" "}
-              e vulnerabilidades. É essa mesma pesquisa que aplicamos ao seu
-              escopo.
+              {t.textBefore} <span className="text-ink">CVEs</span> {t.textAfter}
             </p>
           </div>
         </Reveal>

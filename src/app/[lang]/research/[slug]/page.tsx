@@ -6,11 +6,15 @@ import { Footer } from "@/components/site/footer";
 import { Container } from "@/components/site/section";
 import { Markdown } from "@/components/site/markdown";
 import { getAllPosts, getPostBySlug } from "@/lib/research";
+import { getDictionary } from "@/i18n/dictionaries";
+import { isLocale, type Locale } from "@/i18n/config";
 
-type Params = { slug: string };
+type Params = { lang: string; slug: string };
 
 export function generateStaticParams() {
-  return getAllPosts().map((p) => ({ slug: p.slug }));
+  return (["pt", "en"] as Locale[]).flatMap((lang) =>
+    getAllPosts(lang).map((p) => ({ lang, slug: p.slug })),
+  );
 }
 
 export async function generateMetadata({
@@ -18,11 +22,13 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
-  if (!post) return { title: "Artigo não encontrado — Vyntra Research" };
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) return { title: "Vyntra Research" };
+  const locale: Locale = lang;
+  const post = getPostBySlug(slug, locale);
+  if (!post) return { title: "Not found — Vyntra Research" };
 
-  const url = `https://vyntra.security/research/${post.slug}`;
+  const url = `https://vyntra.security/${locale}/research/${post.slug}`;
   return {
     title: `${post.title} — Vyntra Research`,
     description: post.subtitle || post.title,
@@ -32,7 +38,7 @@ export async function generateMetadata({
       description: post.subtitle || post.title,
       type: "article",
       url,
-      locale: "pt_BR",
+      locale: locale === "en" ? "en_US" : "pt_BR",
       siteName: "Vyntra Research",
       publishedTime: post.date ?? undefined,
       authors: post.author ? [post.author] : undefined,
@@ -42,13 +48,19 @@ export async function generateMetadata({
       title: post.title,
       description: post.subtitle || post.title,
     },
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        "pt-BR": `/pt/research/${post.slug}`,
+        en: `/en/research/${post.slug}`,
+      },
+    },
   };
 }
 
-function formatDate(iso: string | null): string {
+function formatDate(iso: string | null, locale: Locale): string {
   if (!iso) return "";
-  return new Date(iso).toLocaleDateString("pt-BR", {
+  return new Date(iso).toLocaleDateString(locale === "en" ? "en-US" : "pt-BR", {
     day: "2-digit",
     month: "long",
     year: "numeric",
@@ -60,9 +72,12 @@ export default async function ArticlePage({
 }: {
   params: Promise<Params>;
 }) {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) notFound();
+  const locale: Locale = lang;
+  const post = getPostBySlug(slug, locale);
   if (!post) notFound();
+  const t = getDictionary(locale);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -71,14 +86,9 @@ export default async function ArticlePage({
     description: post.subtitle || undefined,
     datePublished: post.date ?? undefined,
     dateModified: post.date ?? undefined,
-    author: post.author
-      ? { "@type": "Person", name: post.author }
-      : undefined,
-    publisher: {
-      "@type": "Organization",
-      name: "Vyntra Security",
-    },
-    mainEntityOfPage: `https://vyntra.security/research/${post.slug}`,
+    author: post.author ? { "@type": "Person", name: post.author } : undefined,
+    publisher: { "@type": "Organization", name: "Vyntra Security" },
+    mainEntityOfPage: `https://vyntra.security/${locale}/research/${post.slug}`,
   };
 
   return (
@@ -87,21 +97,23 @@ export default async function ArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Navbar />
+      <Navbar t={t.nav} lang={locale} />
       <main className="relative z-10">
         <Container className="py-28 md:py-32">
           <article className="mx-auto max-w-[760px]">
             <Link
-              href="/research"
+              href={`/${locale}/research`}
               className="inline-flex items-center text-[0.65rem] uppercase tracking-[0.2em] text-ink-muted transition-colors hover:text-ink"
             >
-              ← Research
+              {t.research.back}
             </Link>
 
             <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-ink-muted">
-              {post.date && <time dateTime={post.date}>{formatDate(post.date)}</time>}
+              {post.date && <time dateTime={post.date}>{formatDate(post.date, locale)}</time>}
               <span className="h-px w-4 bg-line-strong" />
-              <span>{post.readingTime} min de leitura</span>
+              <span>
+                {post.readingTime} {t.research.readingTime}
+              </span>
               {post.author && (
                 <>
                   <span className="h-px w-4 bg-line-strong" />
@@ -127,21 +139,21 @@ export default async function ArticlePage({
 
             {post.author && (
               <div className="mt-16 flex flex-col gap-3 border-t border-line pt-8">
-                <span className="eyebrow">Autor</span>
+                <span className="eyebrow">{t.research.author}</span>
                 <a
                   href="https://hackerone.com/rafabd1?type=user"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex w-fit items-center gap-2 text-sm text-ink transition-colors hover:opacity-70"
                 >
-                  @{post.author} — perfil no HackerOne →
+                  @{post.author} — {t.research.hackeroneCta}
                 </a>
               </div>
             )}
           </article>
         </Container>
       </main>
-      <Footer />
+      <Footer t={t.footer} lang={locale} />
     </>
   );
 }
