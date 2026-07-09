@@ -30,17 +30,15 @@ export function Hero() {
 
         <Reveal delay="160ms">
           <p className="mt-8 max-w-2xl text-sm leading-relaxed text-ink-dim md:text-base">
-            Aplicamos ao seu escopo a mesma pesquisa profunda que encontrou{" "}
-            <Highlight>CVEs</Highlight> e vulnerabilidades em empresas como
-            GitHub, GitLab, AT&T, Mozilla e Vercel — com preço transparente e
-            previsível. Você cadastra o escopo e recebe o orçamento na hora. A
-            gente confirma os detalhes e cuida do resto.
+            A mesma pesquisa que descobre <Highlight>CVEs</Highlight> em grandes
+            empresas, aplicada ao seu produto — com preço transparente e
+            contratação prática.
           </p>
         </Reveal>
 
         <Reveal delay="240ms">
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-            <HexButton href="#iniciar">Iniciar →</HexButton>
+            <HexButton href="#iniciar" comingSoon>Iniciar →</HexButton>
             <HexButton href="#modalidades" variant="ghost">
               Ver modalidades
             </HexButton>

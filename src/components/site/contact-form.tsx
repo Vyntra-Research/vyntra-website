@@ -23,7 +23,6 @@ export function ContactForm() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<Values>({
     resolver: zodResolver(schema),
@@ -31,20 +30,16 @@ export function ContactForm() {
   });
 
   async function onSubmit(values: Values) {
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        throw new Error(data?.error ?? "Falha ao enviar.");
-      }
-      reset();
-    } catch {
-      // fallback silencioso — não expor detalhes
-    }
+    const subject = `Contato Vyntra — ${values.name}${
+      values.company ? ` (${values.company})` : ""
+    }`;
+    const body = `${values.message}\n\n— ${values.name}\n${values.email}${
+      values.company ? `\n${values.company}` : ""
+    }`;
+    const mailto = `mailto:contact@vyntra.sh?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+    window.location.assign(mailto);
   }
 
   return (
@@ -84,7 +79,7 @@ export function ContactForm() {
           type="submit"
           className="inline-flex items-center justify-center gap-2 border border-ink bg-ink px-7 py-3.5 text-[0.7rem] uppercase tracking-[0.22em] text-black transition-opacity hover:opacity-80"
         >
-          Enviar solicitação →
+          Abrir no email →
         </button>
       </div>
     </form>

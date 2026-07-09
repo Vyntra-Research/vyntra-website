@@ -16,6 +16,7 @@ type Props = {
   className?: string;
   external?: boolean;
   onClick?: () => void;
+  comingSoon?: boolean;
 };
 
 export function HexButton({
@@ -25,6 +26,7 @@ export function HexButton({
   className,
   external,
   onClick,
+  comingSoon,
 }: Props) {
   const ref = useRef<HTMLAnchorElement>(null);
 
@@ -39,6 +41,33 @@ export function HexButton({
   const mask =
     "radial-gradient(circle 95px at var(--hx, -999px) var(--hy, -999px), #000 0%, transparent 62%)";
 
+  const base =
+    "group relative inline-flex items-center justify-center overflow-hidden border px-7 py-3.5 text-[0.7rem] uppercase tracking-[0.22em] transition-opacity duration-200";
+  const styles =
+    variant === "primary"
+      ? "border-ink bg-ink text-black"
+      : "border-line-strong text-ink hover:border-ink";
+
+  if (comingSoon) {
+    return (
+      <button
+        type="button"
+        disabled
+        aria-disabled="true"
+        className={cn(base, styles, "cursor-not-allowed hover:opacity-70", className)}
+      >
+        <span className="relative z-10">
+          <span className="block transition-opacity duration-200 group-hover:opacity-0">
+            {children}
+          </span>
+          <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            Em breve
+          </span>
+        </span>
+      </button>
+    );
+  }
+
   return (
     <Link
       ref={ref}
@@ -48,13 +77,7 @@ export function HexButton({
       {...(external
         ? { target: "_blank", rel: "noopener noreferrer" }
         : {})}
-      className={cn(
-        "group relative inline-flex items-center justify-center overflow-hidden border px-7 py-3.5 text-[0.7rem] uppercase tracking-[0.22em] transition-colors duration-200",
-        variant === "primary"
-          ? "border-ink bg-ink text-black hover:border-ink"
-          : "border-line-strong text-ink hover:border-ink hover:text-ink",
-        className,
-      )}
+      className={cn(base, "transition-colors", styles, className)}
     >
       {variant === "primary" && (
         <span
@@ -68,9 +91,7 @@ export function HexButton({
           }}
         />
       )}
-      <span className="relative z-10 flex items-center gap-2">
-        {children}
-      </span>
+      <span className="relative z-10 flex items-center gap-2">{children}</span>
     </Link>
   );
 }

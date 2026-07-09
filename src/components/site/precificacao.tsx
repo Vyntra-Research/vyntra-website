@@ -73,7 +73,7 @@ export function Precificacao() {
               <span className="text-sm text-ink-dim">
                 Preço por porte do escopo
               </span>
-              <HexButton href="#iniciar">Cadastrar escopo</HexButton>
+              <HexButton href="#iniciar" comingSoon>Cadastrar escopo</HexButton>
             </div>
           </div>
         </Reveal>
@@ -152,7 +152,7 @@ export function Precificacao() {
               Valor calculado na hora pelos critérios do escopo. Confirmamos as
               informações e acompanhamos cada etapa com você.
             </span>
-            <HexButton href="#iniciar" variant="ghost" className="px-5 py-2.5 text-[0.6rem]">
+            <HexButton href="#iniciar" variant="ghost" className="px-5 py-2.5 text-[0.6rem]" comingSoon>
               Ver meu orçamento →
             </HexButton>
           </div>

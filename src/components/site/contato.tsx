@@ -17,9 +17,8 @@ export function Contato() {
           }
         >
           <p className="max-w-xl text-sm leading-relaxed text-ink-dim">
-            O orçamento é automático e sai na hora no cadastro do escopo. Por
-            aqui o papo é direto: dúvidas técnicas, definição de modalidade e
-            alinhamento antes de começar.
+            Fale com a gente para tirar dúvidas técnicas, entender qual
+            modalidade faz sentido e alinhar o escopo antes de começar.
           </p>
         </SectionHeader>
 
@@ -30,7 +29,7 @@ export function Contato() {
           <Reveal delay="120ms">
             <div className="flex h-full flex-col justify-between gap-8 border border-line bg-surface p-8">
               <div className="flex flex-col gap-6">
-                <Channel label="E-mail" value="contato@vyntra.security" />
+                <Channel label="E-mail" value="contact@vyntra.sh" />
                 <Channel label="Resposta" value="Até 1 dia útil" />
                 <Channel
                   label="PGP"

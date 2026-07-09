@@ -66,7 +66,7 @@ function ModeCard({
         ))}
       </ul>
       <div className="pt-2">
-        <HexButton href="#iniciar" variant={featured ? "primary" : "ghost"}>
+        <HexButton href="#iniciar" variant={featured ? "primary" : "ghost"} comingSoon>
           Iniciar com esta modalidade
         </HexButton>
       </div>
@@ -105,10 +105,8 @@ export function Modalidades() {
 
         <Reveal>
           <p className="mt-8 text-xs leading-relaxed text-ink-muted">
-            Nas duas modalidades o orçamento é automático no cadastro do
-            escopo. Depois confirmamos as informações com você e ficamos
-            disponíveis para dúvidas e alinhamento técnico durante todo o
-            trabalho.
+            Na dúvida: a dedicada é pontual, ideal para uma análise profunda
+            única; a contínua acompanha produtos que mudam todo mês.
           </p>
         </Reveal>
       </Container>

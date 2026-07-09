@@ -11,6 +11,7 @@ const LINKS = [
   { href: "#quem-somos", label: "Quem somos" },
   { href: "#precificacao", label: "Precificação" },
   { href: "#contato", label: "Contato" },
+  { href: "/research", label: "Research" },
 ];
 
 export function Navbar() {
@@ -47,7 +48,7 @@ export function Navbar() {
         </div>
 
         <div className="hidden md:block">
-          <HexButton href="#iniciar" className="px-5 py-2.5 text-[0.65rem]">
+          <HexButton href="#iniciar" className="px-5 py-2.5 text-[0.65rem]" comingSoon>
             Iniciar
           </HexButton>
         </div>
@@ -89,13 +90,13 @@ export function Navbar() {
                 {l.label}
               </Link>
             ))}
-            <Link
-              href="#iniciar"
-              onClick={() => setOpen(false)}
-              className="mt-4 inline-flex items-center justify-center border border-ink bg-ink px-6 py-3 text-[0.7rem] uppercase tracking-[0.22em] text-black"
+            <button
+              type="button"
+              disabled
+              className="mt-4 inline-flex cursor-not-allowed items-center justify-center border border-line-strong bg-surface px-6 py-3 text-[0.7rem] uppercase tracking-[0.22em] text-ink-muted"
             >
-              Iniciar
-            </Link>
+              Iniciar — em breve
+            </button>
           </div>
         </div>
       )}
