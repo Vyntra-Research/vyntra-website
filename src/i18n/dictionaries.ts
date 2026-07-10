@@ -187,7 +187,7 @@ const pt = {
   research: {
     eyebrow: "Vyntra Research",
     title: "Pesquisa ofensiva, CVEs e writeups.",
-    text: "O trabalho de pesquisa que sustenta o pentest da Vyntra — advisories, análise de vulnerabilidades e detalhes técnicos das falhas que encontramos.",
+    text: "O trabalho de pesquisa por trás da Vyntra — advisories, análise de vulnerabilidades e detalhes técnicos das falhas que encontramos.",
     read: "Ler →",
     readingTime: "min de leitura",
     author: "Autor",
@@ -388,7 +388,7 @@ const en: Dict = {
   research: {
     eyebrow: "Vyntra Research",
     title: "Offensive research, CVEs and writeups.",
-    text: "The research work behind Vyntra's pentest — advisories, vulnerability analysis and the technical details of the flaws we find.",
+    text: "The research work behind Vyntra — advisories, vulnerability analysis and the technical details of the flaws we find.",
     read: "Read →",
     readingTime: "min read",
     author: "Author",
