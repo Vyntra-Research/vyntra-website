@@ -4,8 +4,9 @@ import { Highlight } from "./highlight";
 import { Reveal } from "./reveal";
 import { AsciiBackground } from "./ascii-background";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { sectionId, type Locale } from "@/i18n/config";
 
-export function Hero({ t }: { t: Dictionary["hero"] }) {
+export function Hero({ t, lang }: { t: Dictionary["hero"]; lang: Locale }) {
   return (
     <section id="top" className="relative overflow-hidden">
       <AsciiBackground />
@@ -37,8 +38,8 @@ export function Hero({ t }: { t: Dictionary["hero"] }) {
 
         <Reveal delay="240ms">
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-            <HexButton href="#iniciar" comingSoon>{t.ctaPrimary}</HexButton>
-            <HexButton href="#modalidades" variant="ghost">
+            <HexButton href={`#${sectionId(lang, "start")}`} comingSoon lang={lang}>{t.ctaPrimary}</HexButton>
+            <HexButton href={`#${sectionId(lang, "engagements")}`} variant="ghost">
               {t.ctaSecondary}
             </HexButton>
           </div>

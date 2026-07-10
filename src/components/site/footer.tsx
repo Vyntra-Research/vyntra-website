@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Container } from "./section";
 import { Logo } from "./logo";
 import type { Dictionary } from "@/i18n/dictionaries";
-import type { Locale } from "@/i18n/config";
+import { sectionHref, type Locale } from "@/i18n/config";
 
 function SocialLink({
   href,
@@ -35,12 +35,11 @@ function SocialLink({
 }
 
 export function Footer({ t, lang }: { t: Dictionary["footer"]; lang: Locale }) {
-  const base = `/${lang}`;
   const NAV = [
-    { href: `${base}#modalidades`, label: t.navModalidades },
-    { href: `${base}#quem-somos`, label: t.navQuemSomos },
-    { href: `${base}#precificacao`, label: t.navPrecificacao },
-    { href: `${base}#contato`, label: t.navContato },
+    { href: sectionHref(lang, "engagements"), label: t.navModalidades },
+    { href: sectionHref(lang, "about"), label: t.navQuemSomos },
+    { href: sectionHref(lang, "pricing"), label: t.navPrecificacao },
+    { href: sectionHref(lang, "contact"), label: t.navContato },
   ];
 
   return (

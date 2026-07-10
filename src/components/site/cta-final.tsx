@@ -3,10 +3,11 @@ import { HexButton } from "./hex-button";
 import { Reveal } from "./reveal";
 import { Highlight } from "./highlight";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { sectionId, type Locale } from "@/i18n/config";
 
-export function CtaFinal({ t }: { t: Dictionary["ctaFinal"] }) {
+export function CtaFinal({ t, lang }: { t: Dictionary["ctaFinal"]; lang: Locale }) {
   return (
-    <Section id="iniciar" className="border-b border-line">
+    <Section id={sectionId(lang, "start")} className="border-b border-line">
       <Container className="flex flex-col items-start gap-10 py-24 md:py-36">
         <Reveal>
           <div className="flex items-center gap-3">
@@ -27,8 +28,8 @@ export function CtaFinal({ t }: { t: Dictionary["ctaFinal"] }) {
         </Reveal>
         <Reveal delay="240ms">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <HexButton href="#iniciar" comingSoon>{t.ctaPrimary}</HexButton>
-            <HexButton href="#contato" variant="ghost">
+            <HexButton href={`#${sectionId(lang, "start")}`} comingSoon lang={lang}>{t.ctaPrimary}</HexButton>
+            <HexButton href={`#${sectionId(lang, "contact")}`} variant="ghost">
               {t.ctaSecondary}
             </HexButton>
           </div>

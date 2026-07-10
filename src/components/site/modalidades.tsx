@@ -2,6 +2,7 @@ import { Container, Section, SectionHeader } from "./section";
 import { Reveal } from "./reveal";
 import { HexButton } from "./hex-button";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { sectionId, type Locale } from "@/i18n/config";
 
 type Mode = {
   tag: string;
@@ -15,10 +16,12 @@ function ModeCard({
   mode,
   featured,
   featuredLabel,
+  lang,
 }: {
   mode: Mode;
   featured?: boolean;
   featuredLabel?: string;
+  lang: Locale;
 }) {
   return (
     <div
@@ -49,7 +52,7 @@ function ModeCard({
         ))}
       </ul>
       <div className="pt-2">
-        <HexButton href="#iniciar" variant={featured ? "primary" : "ghost"} comingSoon>
+        <HexButton href={`#${sectionId(lang, "start")}`} variant={featured ? "primary" : "ghost"} comingSoon lang={lang}>
           {mode.cta}
         </HexButton>
       </div>
@@ -57,9 +60,9 @@ function ModeCard({
   );
 }
 
-export function Modalidades({ t }: { t: Dictionary["modalidades"] }) {
+export function Modalidades({ t, lang }: { t: Dictionary["modalidades"]; lang: Locale }) {
   return (
-    <Section id="modalidades">
+    <Section id={sectionId(lang, "engagements")}>
       <Container className="py-20 md:py-28">
         <SectionHeader index={t.index} eyebrow={t.eyebrow} title={t.title}>
           <p className="max-w-xl text-sm leading-relaxed text-ink-dim">
@@ -69,10 +72,10 @@ export function Modalidades({ t }: { t: Dictionary["modalidades"] }) {
 
         <div className="mt-14 grid gap-px bg-line lg:grid-cols-2">
           <Reveal>
-            <ModeCard mode={t.dedicado} featuredLabel={t.featured} />
+            <ModeCard mode={t.dedicado} featuredLabel={t.featured} lang={lang} />
           </Reveal>
           <Reveal delay="120ms">
-            <ModeCard mode={t.continuo} featuredLabel={t.featured} featured />
+            <ModeCard mode={t.continuo} featuredLabel={t.featured} featured lang={lang} />
           </Reveal>
         </div>
 

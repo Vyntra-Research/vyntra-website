@@ -2,10 +2,11 @@ import { Container, Section, SectionHeader } from "./section";
 import { Reveal } from "./reveal";
 import { Highlight } from "./highlight";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { sectionId, type Locale } from "@/i18n/config";
 
-export function QuemSomos({ t }: { t: Dictionary["quemSomos"] }) {
+export function QuemSomos({ t, lang }: { t: Dictionary["quemSomos"]; lang: Locale }) {
   return (
-    <Section id="quem-somos">
+    <Section id={sectionId(lang, "about")}>
       <Container className="py-20 md:py-28">
         <SectionHeader index={t.index} eyebrow={t.eyebrow} title={
           <>

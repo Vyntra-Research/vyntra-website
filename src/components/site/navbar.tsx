@@ -7,7 +7,7 @@ import { HexButton } from "./hex-button";
 import { LocaleToggle } from "./locale-toggle";
 import { cn } from "@/lib/utils";
 import type { Dictionary } from "@/i18n/dictionaries";
-import type { Locale } from "@/i18n/config";
+import { sectionHref, sectionId, type Locale } from "@/i18n/config";
 
 export function Navbar({
   t,
@@ -22,10 +22,10 @@ export function Navbar({
   const base = `/${lang}`;
 
   const LINKS = [
-    { href: `${base}#modalidades`, label: t.modalidades },
-    { href: `${base}#quem-somos`, label: t.quemSomos },
-    { href: `${base}#precificacao`, label: t.precificacao },
-    { href: `${base}#contato`, label: t.contato },
+    { href: sectionHref(lang, "engagements"), label: t.modalidades },
+    { href: sectionHref(lang, "about"), label: t.quemSomos },
+    { href: sectionHref(lang, "pricing"), label: t.precificacao },
+    { href: sectionHref(lang, "contact"), label: t.contato },
     { href: `${base}/research`, label: t.research },
   ];
 
@@ -77,7 +77,7 @@ export function Navbar({
 
         <div className="hidden items-center gap-3 md:flex">
           <LocaleToggle current={lang} />
-          <HexButton href="#iniciar" className="px-5 py-2.5 text-[0.65rem]" comingSoon>
+          <HexButton href={`#${sectionId(lang, "start")}`} className="px-5 py-2.5 text-[0.65rem]" comingSoon lang={lang}>
             {t.iniciar}
           </HexButton>
         </div>

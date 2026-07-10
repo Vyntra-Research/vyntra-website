@@ -3,10 +3,11 @@ import { Reveal } from "./reveal";
 import { ContactForm } from "./contact-form";
 import { Highlight } from "./highlight";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { sectionId, type Locale } from "@/i18n/config";
 
-export function Contato({ t }: { t: Dictionary["contato"] }) {
+export function Contato({ t, lang }: { t: Dictionary["contato"]; lang: Locale }) {
   return (
-    <Section id="contato">
+    <Section id={sectionId(lang, "contact")}>
       <Container className="py-20 md:py-28">
         <SectionHeader index={t.index} eyebrow={t.eyebrow} title={
           <>

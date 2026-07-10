@@ -3,10 +3,11 @@ import { Reveal } from "./reveal";
 import { HexButton } from "./hex-button";
 import { Highlight } from "./highlight";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { sectionId, type Locale } from "@/i18n/config";
 
-export function Precificacao({ t }: { t: Dictionary["precificacao"] }) {
+export function Precificacao({ t, lang }: { t: Dictionary["precificacao"]; lang: Locale }) {
   return (
-    <Section id="precificacao">
+    <Section id={sectionId(lang, "pricing")}>
       <Container className="py-20 md:py-28">
         <SectionHeader index={t.index} eyebrow={t.eyebrow} title={
           <>
@@ -39,7 +40,7 @@ export function Precificacao({ t }: { t: Dictionary["precificacao"] }) {
             </div>
             <div className="flex flex-col items-start gap-4 md:items-end">
               <span className="text-sm text-ink-dim">{t.dedicated.price}</span>
-              <HexButton href="#iniciar" comingSoon>{t.dedicated.cta}</HexButton>
+              <HexButton href={`#${sectionId(lang, "start")}`} comingSoon lang={lang}>{t.dedicated.cta}</HexButton>
             </div>
           </div>
         </Reveal>
@@ -113,7 +114,7 @@ export function Precificacao({ t }: { t: Dictionary["precificacao"] }) {
         <Reveal>
           <div className="mt-8 flex flex-col gap-3 border border-line bg-base p-6 text-xs leading-relaxed text-ink-muted sm:flex-row sm:items-center sm:justify-between">
             <span>{t.note}</span>
-            <HexButton href="#iniciar" variant="ghost" className="px-5 py-2.5 text-[0.6rem]" comingSoon>
+            <HexButton href={`#${sectionId(lang, "start")}`} variant="ghost" className="px-5 py-2.5 text-[0.6rem]" comingSoon lang={lang}>
               {t.noteCta}
             </HexButton>
           </div>

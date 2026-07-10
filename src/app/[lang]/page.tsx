@@ -26,14 +26,14 @@ export default async function Home({
     <>
       <Navbar t={t.nav} lang={locale} />
       <main className="relative z-10">
-        <Hero t={t.hero} />
+        <Hero t={t.hero} lang={locale} />
         <Proof t={t.proof} />
         <Assets t={t.assets} />
-        <Modalidades t={t.modalidades} />
-        <QuemSomos t={t.quemSomos} />
-        <Precificacao t={t.precificacao} />
-        <Contato t={t.contato} />
-        <CtaFinal t={t.ctaFinal} />
+        <Modalidades t={t.modalidades} lang={locale} />
+        <QuemSomos t={t.quemSomos} lang={locale} />
+        <Precificacao t={t.precificacao} lang={locale} />
+        <Contato t={t.contato} lang={locale} />
+        <CtaFinal t={t.ctaFinal} lang={locale} />
       </main>
       <Footer t={t.footer} lang={locale} />
     </>

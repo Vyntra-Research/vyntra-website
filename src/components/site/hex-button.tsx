@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
+import { comingSoonLabel, type Locale } from "@/i18n/config";
 
 const HEX_SVG = `<svg xmlns='http://www.w3.org/2000/svg' width='20.78' height='36'><path d='M0-12L-10.39-6L-10.39 6L0 12L10.39 6L10.39-6Z M10.39 6L0 12L0 24L10.39 24L20.78 24L20.78 12Z' fill='none' stroke='%23000' stroke-width='1'/></svg>`;
 const HEX_BG = `url("data:image/svg+xml,${encodeURIComponent(HEX_SVG)}")`;
@@ -17,6 +18,7 @@ type Props = {
   external?: boolean;
   onClick?: () => void;
   comingSoon?: boolean;
+  lang?: Locale;
 };
 
 export function HexButton({
@@ -27,6 +29,7 @@ export function HexButton({
   external,
   onClick,
   comingSoon,
+  lang = "pt",
 }: Props) {
   const ref = useRef<HTMLAnchorElement>(null);
 
@@ -61,7 +64,7 @@ export function HexButton({
             {children}
           </span>
           <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-            Em breve
+            {comingSoonLabel(lang)}
           </span>
         </span>
       </button>
