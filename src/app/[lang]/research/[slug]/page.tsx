@@ -60,7 +60,7 @@ export async function generateMetadata({
 
 function formatDate(iso: string | null, locale: Locale): string {
   if (!iso) return "";
-  return new Date(iso).toLocaleDateString(locale === "en" ? "en-US" : "pt-BR", {
+  return new Date(`${iso}T12:00:00`).toLocaleDateString(locale === "en" ? "en-US" : "pt-BR", {
     day: "2-digit",
     month: "long",
     year: "numeric",
