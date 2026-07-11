@@ -47,9 +47,9 @@ export function SectionHeader({
   return (
     <div className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-12">
       <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-3">
-          <span className="text-ink-muted text-xs tabular-nums">{index}</span>
-          <span className="h-px w-8 bg-line-strong" />
+        <div className="section-coordinate flex items-center gap-3">
+          <span aria-hidden className="section-coordinate__node" />
+          <span className="section-coordinate__index text-xs tabular-nums">{index}</span>
           <span className="eyebrow">{eyebrow}</span>
         </div>
       </div>

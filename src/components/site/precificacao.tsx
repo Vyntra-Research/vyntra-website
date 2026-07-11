@@ -7,8 +7,16 @@ import { sectionId, type Locale } from "@/i18n/config";
 
 export function Precificacao({ t, lang }: { t: Dictionary["precificacao"]; lang: Locale }) {
   return (
-    <Section id={sectionId(lang, "pricing")}>
-      <Container className="py-20 md:py-28">
+    <Section id={sectionId(lang, "pricing")} className="overflow-hidden">
+      <div aria-hidden className="scope-watermark">
+        <span className="scope-watermark__frame scope-watermark__frame--outer" />
+        <span className="scope-watermark__frame scope-watermark__frame--middle" />
+        <span className="scope-watermark__frame scope-watermark__frame--inner" />
+        <span className="scope-watermark__axis scope-watermark__axis--x" />
+        <span className="scope-watermark__axis scope-watermark__axis--y" />
+        <span className="scope-watermark__origin signal-node" />
+      </div>
+      <Container className="relative z-10 py-20 md:py-28">
         <SectionHeader index={t.index} eyebrow={t.eyebrow} title={
           <>
             {t.titlePre} <Highlight>{t.titleHighlight}</Highlight> {t.titlePost}
@@ -74,7 +82,7 @@ export function Precificacao({ t, lang }: { t: Dictionary["precificacao"]; lang:
           {t.plans.map((p, i) => (
             <Reveal key={p.name} delay={`${i * 80}ms`}>
               <div
-                className={`flex h-full flex-col gap-6 border border-transparent p-8 md:p-9 ${
+                className={`signal-card flex h-full flex-col gap-6 border border-transparent p-8 md:p-9 ${
                   p.name === "Plus" ? "bg-surface-2" : "bg-base"
                 }`}
               >

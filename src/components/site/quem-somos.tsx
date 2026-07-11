@@ -6,8 +6,9 @@ import { sectionId, type Locale } from "@/i18n/config";
 
 export function QuemSomos({ t, lang }: { t: Dictionary["quemSomos"]; lang: Locale }) {
   return (
-    <Section id={sectionId(lang, "about")}>
-      <Container className="py-20 md:py-28">
+    <Section id={sectionId(lang, "about")} className="overflow-hidden">
+      <div aria-hidden className="cicada-watermark" />
+      <Container className="relative z-10 py-20 md:py-28">
         <SectionHeader index={t.index} eyebrow={t.eyebrow} title={
           <>
             {t.titlePre} <Highlight>{t.titleHighlight}</Highlight> {t.titlePost}
@@ -22,7 +23,7 @@ export function QuemSomos({ t, lang }: { t: Dictionary["quemSomos"]; lang: Local
           <div className="grid gap-px bg-line sm:grid-cols-3">
             {t.principles.map((p) => (
               <Reveal key={p.n}>
-                <div className="flex h-full flex-col gap-5 border border-transparent bg-base p-8">
+                <div className="signal-card flex h-full flex-col gap-5 border border-transparent bg-base/95 p-8">
                   <span className="text-xs text-ink-muted tabular-nums">{p.n}</span>
                   <h3 className="text-base font-medium text-ink">{p.title}</h3>
                   <p className="text-xs leading-relaxed text-ink-dim">{p.desc}</p>
@@ -32,7 +33,7 @@ export function QuemSomos({ t, lang }: { t: Dictionary["quemSomos"]; lang: Local
           </div>
 
           <Reveal delay="120ms">
-            <div className="flex h-full flex-col justify-between gap-6 border border-line bg-surface p-8">
+            <div className="signal-card flex h-full flex-col justify-between gap-6 border border-line bg-surface/95 p-8">
               <div className="flex flex-col gap-3">
                 <span className="eyebrow">{t.founder.eyebrow}</span>
                 <span className="text-lg font-medium text-ink">

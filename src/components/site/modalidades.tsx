@@ -25,7 +25,7 @@ function ModeCard({
 }) {
   return (
     <div
-      className={`flex h-full flex-col gap-8 border p-8 md:p-10 ${
+      className={`signal-card flex h-full flex-col gap-8 border p-8 md:p-10 ${
         featured ? "border-line-strong bg-surface" : "border-line"
       }`}
     >

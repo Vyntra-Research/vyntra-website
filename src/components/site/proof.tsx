@@ -35,7 +35,7 @@ export function Proof({ t }: { t: Dictionary["proof"] }) {
         <Reveal>
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-line-strong" />
+              <span aria-hidden className="section-coordinate__node" />
               <span className="eyebrow">{t.eyebrow}</span>
             </div>
             <p className="max-w-2xl text-sm leading-relaxed text-ink-dim">

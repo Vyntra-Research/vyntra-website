@@ -96,6 +96,250 @@
     background-size: 64px 64px;
   }
 
+  /* Interactive monochrome signal fields */
+  @property --signal-scan-x {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: -25%;
+  }
+  .signal-field {
+    --signal-active: 0;
+    --signal-x: 50%;
+    --signal-y: 50%;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .signal-field__layer {
+    position: absolute;
+    inset: 0;
+  }
+  .signal-field--plus .signal-field__layer {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cpath d='M18 14.5v7M14.5 18h7' fill='none' stroke='%23fff' stroke-width='.8'/%3E%3C/svg%3E");
+    background-size: 36px 36px;
+  }
+  .signal-field--pixel .signal-field__base {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.42) 0 0.65px, transparent 0.8px);
+    background-size: 7px 7px;
+  }
+  .signal-field--pixel .signal-field__hot,
+  .signal-field--pixel .signal-field__scan {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cg fill='none' stroke='%23fff' stroke-width='.75'%3E%3Cpath d='M7 4.5v5M4.5 7h5M18.5 18.5l5 5m0-5l-5 5'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 28px 28px;
+  }
+  .signal-field__base {
+    opacity: 0.12;
+  }
+  .signal-field__hot {
+    opacity: calc(var(--signal-active) * 0.72);
+    -webkit-mask-image: radial-gradient(
+      circle 170px at var(--signal-x) var(--signal-y),
+      #000 0%,
+      rgba(0, 0, 0, 0.75) 38%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      circle 170px at var(--signal-x) var(--signal-y),
+      #000 0%,
+      rgba(0, 0, 0, 0.75) 38%,
+      transparent 100%
+    );
+    transition: opacity 180ms ease;
+  }
+  .signal-field__scan {
+    --signal-scan-x: -25%;
+    opacity: 0.2;
+    -webkit-mask-image: radial-gradient(
+      ellipse 24% 78% at var(--signal-scan-x) 50%,
+      #000 0%,
+      rgba(0, 0, 0, 0.55) 42%,
+      transparent 82%
+    );
+    mask-image: radial-gradient(
+      ellipse 24% 78% at var(--signal-scan-x) 50%,
+      #000 0%,
+      rgba(0, 0, 0, 0.55) 42%,
+      transparent 82%
+    );
+    animation: signal-scan 9s linear infinite;
+  }
+  .signal-field--plus .signal-field__base {
+    opacity: 0.16;
+  }
+  .signal-field--plus .signal-field__scan {
+    opacity: 0.08;
+  }
+  .signal-field--hero {
+    inset: 7% 0 0 38%;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 34%, #000 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 34%, #000 100%);
+  }
+  .signal-field--section {
+    inset: 0 0 auto 0;
+    height: min(520px, 70%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.7) 58%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.7) 58%, transparent 100%);
+  }
+  @keyframes signal-scan {
+    to {
+      --signal-scan-x: 125%;
+    }
+  }
+
+  /* Coordinate markers and framed content nodes */
+  .section-coordinate {
+    min-height: 1.75rem;
+  }
+  .section-coordinate__node,
+  .signal-node {
+    position: relative;
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    flex: 0 0 auto;
+  }
+  .section-coordinate__node::before,
+  .section-coordinate__node::after,
+  .signal-node::before,
+  .signal-node::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+  }
+  .section-coordinate__node::before,
+  .signal-node::before {
+    left: 0;
+    right: 0;
+    top: calc(50% - 0.5px);
+    height: 1px;
+  }
+  .section-coordinate__node::after,
+  .signal-node::after {
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 0.5px);
+    width: 1px;
+  }
+  .section-coordinate__node {
+    color: var(--color-ink-dim);
+  }
+  .section-coordinate__index {
+    border: 1px solid var(--color-line-strong);
+    color: var(--color-ink-dim);
+    min-width: 2.1rem;
+    padding: 0.22rem 0.35rem;
+    text-align: center;
+  }
+  .signal-card {
+    position: relative;
+    isolation: isolate;
+  }
+  .signal-card::before,
+  .signal-card::after {
+    position: absolute;
+    z-index: 2;
+    color: var(--color-ink-muted);
+    font-size: 0.7rem;
+    line-height: 1;
+    transition: color 180ms ease;
+  }
+  .signal-card::before {
+    content: "+";
+    top: -0.38rem;
+    left: -0.24rem;
+  }
+  .signal-card::after {
+    content: "+";
+    right: -0.24rem;
+    bottom: -0.38rem;
+  }
+  .signal-card:hover::before,
+  .signal-card:hover::after {
+    color: var(--color-ink);
+  }
+
+  /* Brand illustration used as a quiet section watermark */
+  .cicada-watermark {
+    position: absolute;
+    top: 50%;
+    right: clamp(-8rem, -3vw, -2rem);
+    width: clamp(22rem, 40vw, 38rem);
+    aspect-ratio: 556 / 850;
+    transform: translateY(-48%) rotate(3deg);
+    background: var(--color-ink);
+    opacity: 0.026;
+    -webkit-mask: url("/assets/vyntra/vyntra-cicada-logo-sharp.svg") center / contain no-repeat;
+    mask: url("/assets/vyntra/vyntra-cicada-logo-sharp.svg") center / contain no-repeat;
+  }
+
+  .scope-watermark {
+    position: absolute;
+    top: 2.5rem;
+    right: clamp(-9rem, -4vw, -3rem);
+    width: clamp(24rem, 39vw, 38rem);
+    aspect-ratio: 1;
+    color: var(--color-ink);
+    opacity: 0.04;
+    transform: rotate(-4deg);
+  }
+  .scope-watermark__frame,
+  .scope-watermark__axis {
+    position: absolute;
+    display: block;
+  }
+  .scope-watermark__frame {
+    border: 1px solid currentColor;
+    inset: 0;
+  }
+  .scope-watermark__frame--middle {
+    inset: 18%;
+  }
+  .scope-watermark__frame--inner {
+    inset: 36%;
+  }
+  .scope-watermark__axis--x {
+    top: 50%;
+    left: -8%;
+    width: 116%;
+    height: 1px;
+    background: currentColor;
+  }
+  .scope-watermark__axis--y {
+    top: -8%;
+    left: 50%;
+    width: 1px;
+    height: 116%;
+    background: currentColor;
+  }
+  .scope-watermark__origin {
+    position: absolute;
+    top: calc(50% - 0.35rem);
+    left: calc(50% - 0.35rem);
+    color: currentColor;
+  }
+
+  @media (max-width: 767px) {
+    .signal-field--hero {
+      inset: 10% -30% 0 18%;
+      opacity: 0.65;
+    }
+    .signal-field--section {
+      height: 38rem;
+    }
+    .cicada-watermark {
+      right: -11rem;
+      width: 26rem;
+      opacity: 0.02;
+    }
+    .scope-watermark {
+      top: 5rem;
+      right: -13rem;
+      width: 28rem;
+      opacity: 0.03;
+    }
+  }
+
   .text-balance {
     text-wrap: balance;
   }
@@ -162,6 +406,9 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .vyntra-wave {
+      animation: none;
+    }
+    .signal-field__scan {
       animation: none;
     }
   }

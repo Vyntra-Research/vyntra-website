@@ -11,8 +11,8 @@ export function CtaFinal({ t, lang }: { t: Dictionary["ctaFinal"]; lang: Locale 
       <Container className="flex flex-col items-start gap-10 py-24 md:py-36">
         <Reveal>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-ink-muted tabular-nums">{t.index}</span>
-            <span className="h-px w-8 bg-line-strong" />
+            <span aria-hidden className="section-coordinate__node" />
+            <span className="section-coordinate__index text-xs tabular-nums">{t.index}</span>
             <span className="eyebrow">{t.eyebrow}</span>
           </div>
         </Reveal>

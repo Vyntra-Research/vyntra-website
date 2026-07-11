@@ -3,6 +3,7 @@ import { HexButton } from "./hex-button";
 import { Highlight } from "./highlight";
 import { Reveal } from "./reveal";
 import { AsciiBackground } from "./ascii-background";
+import { SignalField } from "./signal-field";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { sectionId, type Locale } from "@/i18n/config";
 
@@ -10,6 +11,7 @@ export function Hero({ t, lang }: { t: Dictionary["hero"]; lang: Locale }) {
   return (
     <section id="top" className="relative overflow-hidden">
       <AsciiBackground />
+      <SignalField variant="pixel" className="signal-field--hero" />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(62%_72%_at_30%_50%,rgba(0,0,0,0.6),transparent_72%)]"
@@ -17,7 +19,7 @@ export function Hero({ t, lang }: { t: Dictionary["hero"]; lang: Locale }) {
       <Container className="relative flex min-h-[92svh] flex-col justify-center pt-28 pb-16">
         <Reveal>
           <div className="flex flex-wrap items-center gap-3">
-            <span className="h-px w-10 bg-line-strong" />
+            <span aria-hidden className="section-coordinate__node" />
             <span className="eyebrow">{t.eyebrow1}</span>
             <span className="text-ink-muted text-xs">/</span>
             <span className="eyebrow">{t.eyebrow2}</span>
