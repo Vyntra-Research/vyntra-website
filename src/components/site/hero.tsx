@@ -16,10 +16,11 @@ export function Hero({ t, lang }: { t: Dictionary["hero"]; lang: Locale }) {
       />
       <Container className="relative flex min-h-[92svh] flex-col justify-center pt-28 pb-16">
         <Reveal>
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="eyebrow">{t.eyebrow1}</span>
-            <span className="text-ink-muted text-xs">/</span>
-            <span className="eyebrow">{t.eyebrow2}</span>
+          <div className="relative flex w-fit max-w-full flex-wrap items-center gap-3">
+            <span aria-hidden className="hero-kicker-protection" />
+            <span className="relative z-10 eyebrow">{t.eyebrow1}</span>
+            <span className="relative z-10 text-ink-muted text-xs">/</span>
+            <span className="relative z-10 eyebrow">{t.eyebrow2}</span>
           </div>
         </Reveal>
 

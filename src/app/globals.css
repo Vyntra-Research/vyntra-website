@@ -247,14 +247,38 @@
     display: block;
   }
 
+  .hero-kicker-protection {
+    position: absolute;
+    inset: -1.7rem -3.5rem;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.98) 0%,
+      rgba(0, 0, 0, 0.82) 42%,
+      transparent 76%
+    );
+  }
+
+  .nav-dock-hidden {
+    transform: translateY(-150%);
+  }
+
+  .nav-dock-shell {
+    border-color: rgba(255, 255, 255, 0.065);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.025),
+      0 10px 34px rgba(255, 255, 255, 0.025),
+      0 18px 48px rgba(0, 0, 0, 0.46);
+  }
+
   .attack-path-illustration {
     position: absolute;
     top: 50%;
     right: clamp(-5rem, -2vw, -1rem);
     width: clamp(28rem, 43vw, 42rem);
     aspect-ratio: 1;
-    color: var(--color-ink);
-    opacity: 0.14;
+    color: var(--color-ink-dim);
+    opacity: 0.38;
     transform: translateY(-50%) rotate(-3deg);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 100%);
     mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 100%);
@@ -277,7 +301,7 @@
     .attack-path-illustration {
       right: -18rem;
       width: 34rem;
-      opacity: 0.095;
+      opacity: 0.28;
     }
   }
 

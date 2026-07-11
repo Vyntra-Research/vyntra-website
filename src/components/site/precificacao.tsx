@@ -11,7 +11,7 @@ export function Precificacao({ t, lang }: { t: Dictionary["precificacao"]; lang:
       <Container className="relative z-10 py-20 md:py-28">
         <SectionHeader index={t.index} eyebrow={t.eyebrow} title={
           <>
-            {t.titlePre} <Highlight>{t.titleHighlight}</Highlight> {t.titlePost}
+            {t.titlePre} <Highlight>{t.titleHighlight}</Highlight>{t.titlePost}
           </>
         }>
           <p className="max-w-xl text-sm leading-relaxed text-ink-dim">

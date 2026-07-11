@@ -156,13 +156,13 @@ export function PixelNoiseField() {
       context.clearRect(0, 0, width, height);
 
       const time = reducedMotion ? 0 : timestamp / 1000;
-      const imageX = ((time * 70) % (width * 1.55)) - width * 0.28;
+      const imageX = ((time * 82) % (width * 1.55)) - width * 0.28;
       const imageY = height * (0.36 + Math.sin(time * 0.24) * 0.06);
 
       for (let y = 0; y < height; y += CELL) {
         for (let x = 0; x < width; x += CELL) {
           const movingNoise = fbm(
-            x / FEATURE - time * 0.06,
+            x / FEATURE - time * 0.07,
             y / FEATURE + Math.sin(time * 0.18) * 0.2,
             3.4,
           );

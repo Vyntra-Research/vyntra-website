@@ -58,7 +58,7 @@ export function ContactForm({ t }: { t: FormStrings }) {
       </Field>
 
       <div className="flex flex-col gap-4 border border-line bg-base p-6 sm:flex-row sm:items-center sm:justify-between">
-        <span className="text-[0.65rem] uppercase tracking-[0.2em] text-ink-muted">
+        <span className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-ink-dim">
           {t.note}
         </span>
         <button
@@ -84,7 +84,7 @@ function Field({
   return (
     <label className="flex flex-col gap-2 border border-line bg-base p-4">
       <span className="flex items-center justify-between">
-        <span className="text-[0.65rem] uppercase tracking-[0.2em] text-ink-muted">
+        <span className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-ink-dim">
           {label}
         </span>
         {error && <span className="text-[0.65rem] text-ink">{error}</span>}

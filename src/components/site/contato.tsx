@@ -46,7 +46,7 @@ export function Contato({ t, lang }: { t: Dictionary["contato"]; lang: Locale })
 function Channel({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <span className="text-[0.65rem] uppercase tracking-[0.2em] text-ink-muted">
+      <span className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-ink-dim">
         {label}
       </span>
       <span className="text-sm text-ink">{value}</span>

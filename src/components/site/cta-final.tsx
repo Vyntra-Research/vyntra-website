@@ -19,7 +19,7 @@ export function CtaFinal({ t, lang }: { t: Dictionary["ctaFinal"]; lang: Locale 
         </Reveal>
         <Reveal delay="80ms">
           <h2 className="max-w-3xl text-balance text-3xl leading-[1.1] font-medium md:text-5xl lg:text-6xl">
-            {t.titlePre} <Highlight>{t.titleHighlight}</Highlight> {t.titlePost}
+            {t.titlePre} <Highlight>{t.titleHighlight}</Highlight>{t.titlePost}
           </h2>
         </Reveal>
         <Reveal delay="160ms">

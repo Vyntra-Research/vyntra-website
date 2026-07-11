@@ -82,7 +82,7 @@ export function AsciiBackground() {
       const h = el.clientHeight;
       if (w && h) {
         setBgBase(renderPattern(w, h, 1));
-        setBgWave(renderPattern(w, h, 1.2));
+        setBgWave(renderPattern(w, h, 1.35));
       }
     };
     const ro = new ResizeObserver(() => {
