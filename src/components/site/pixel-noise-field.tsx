@@ -3,8 +3,9 @@
 import { useEffect, useRef } from "react";
 
 const CELL = 7;
-const FEATURE = 118;
+const FEATURE = 124;
 const OCTAVES = 4;
+const FRAME_INTERVAL = 1000 / 12;
 
 function smooth(value: number): number {
   return value * value * (3 - 2 * value);
@@ -41,92 +42,170 @@ function fbm(x: number, y: number, seed: number): number {
   return total / normalization;
 }
 
-function renderField(width: number, height: number, seed: number): string {
-  const canvas = document.createElement("canvas");
-  const scale = Math.min(window.devicePixelRatio || 1, 1.5);
-  canvas.width = Math.ceil(width * scale);
-  canvas.height = Math.ceil(height * scale);
+function clamp(value: number): number {
+  return Math.max(0, Math.min(1, value));
+}
 
-  const context = canvas.getContext("2d");
-  if (!context) return "";
+type ProtectedArea = {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+};
 
-  context.scale(scale, scale);
-  context.lineWidth = 0.75;
+function protectionAt(x: number, y: number, areas: ProtectedArea[]): number {
+  let protection = 0;
 
-  for (let y = 0; y < height; y += CELL) {
-    for (let x = 0; x < width; x += CELL) {
-      const broad = fbm(x / FEATURE, y / FEATURE, seed);
-      const detail = hash(x / CELL, y / CELL, seed + 9);
-      const intensity = Math.max(0, Math.min(1, (broad - 0.3) / 0.42));
-      if (intensity < 0.08 || detail > 0.58 + intensity * 0.34) continue;
-
-      const alpha = 0.05 + intensity * 0.38;
-      const centerX = x + CELL / 2;
-      const centerY = y + CELL / 2;
-      const radius = 0.55 + intensity * 1.8;
-      context.strokeStyle = `rgba(242,242,242,${alpha.toFixed(3)})`;
-      context.fillStyle = context.strokeStyle;
-
-      if (intensity > 0.72 && detail < 0.28) {
-        context.beginPath();
-        context.moveTo(centerX - radius, centerY - radius);
-        context.lineTo(centerX + radius, centerY + radius);
-        context.moveTo(centerX + radius, centerY - radius);
-        context.lineTo(centerX - radius, centerY + radius);
-        context.stroke();
-      } else if (intensity > 0.46) {
-        context.beginPath();
-        context.moveTo(centerX - radius, centerY);
-        context.lineTo(centerX + radius, centerY);
-        context.moveTo(centerX, centerY - radius);
-        context.lineTo(centerX, centerY + radius);
-        context.stroke();
-      } else {
-        context.fillRect(centerX, centerY, 0.8, 0.8);
-      }
-    }
+  for (const area of areas) {
+    const outsideX = Math.max(area.left - x, 0, x - area.right);
+    const outsideY = Math.max(area.top - y, 0, y - area.bottom);
+    const distance = Math.hypot(outsideX, outsideY);
+    protection = Math.max(protection, 1 - smooth(clamp(distance / 72)));
   }
 
-  return canvas.toDataURL();
+  return protection;
+}
+
+function drawGlyph(
+  context: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  luminance: number,
+  grain: number,
+) {
+  const centerX = x + CELL / 2;
+  const centerY = y + CELL / 2;
+  const radius = 0.45 + luminance * 2.05;
+  const alpha = 0.035 + luminance * 0.44;
+  const color = `rgba(242,242,242,${alpha.toFixed(3)})`;
+  context.fillStyle = color;
+  context.strokeStyle = color;
+
+  if (luminance > 0.7 && grain < 0.42) {
+    context.beginPath();
+    context.moveTo(centerX - radius, centerY - radius);
+    context.lineTo(centerX + radius, centerY + radius);
+    context.moveTo(centerX + radius, centerY - radius);
+    context.lineTo(centerX - radius, centerY + radius);
+    context.stroke();
+  } else if (luminance > 0.38) {
+    context.beginPath();
+    context.moveTo(centerX - radius, centerY);
+    context.lineTo(centerX + radius, centerY);
+    context.moveTo(centerX, centerY - radius);
+    context.lineTo(centerX, centerY + radius);
+    context.stroke();
+  } else {
+    context.fillRect(centerX, centerY, 0.8, 0.8);
+  }
 }
 
 export function PixelNoiseField() {
-  const ref = useRef<HTMLDivElement>(null);
-  const baseRef = useRef<HTMLDivElement>(null);
-  const waveRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
+    const visibleContext = canvas?.getContext("2d");
+    const buffer = document.createElement("canvas");
+    const context = buffer.getContext("2d");
+    if (!container || !canvas || !visibleContext || !context) return;
 
-    let frame = 0;
-    const draw = () => {
-      const { clientWidth: width, clientHeight: height } = element;
-      if (!width || !height) return;
+    let width = 0;
+    let height = 0;
+    let scale = 1;
+    let animationFrame = 0;
+    let lastFrame = -FRAME_INTERVAL;
+    let protectedAreas: ProtectedArea[] = [];
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      const base = renderField(width, height, 3.4);
-      const wave = renderField(width, height, 8.1);
-      if (baseRef.current) baseRef.current.style.backgroundImage = `url(${base})`;
-      if (waveRef.current) waveRef.current.style.backgroundImage = `url(${wave})`;
+    const resize = () => {
+      width = container.clientWidth;
+      height = container.clientHeight;
+      scale = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.ceil(width * scale);
+      canvas.height = Math.ceil(height * scale);
+      buffer.width = canvas.width;
+      buffer.height = canvas.height;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      context.setTransform(scale, 0, 0, scale, 0, 0);
+      context.lineWidth = 0.72;
+
+      const containerBounds = container.getBoundingClientRect();
+      protectedAreas = Array.from(
+        container.parentElement?.querySelectorAll<HTMLElement>("[data-noise-protection]") ?? [],
+      ).map((element) => {
+        const bounds = element.getBoundingClientRect();
+        return {
+          left: bounds.left - containerBounds.left - 12,
+          top: bounds.top - containerBounds.top - 10,
+          right: bounds.right - containerBounds.left + 12,
+          bottom: bounds.bottom - containerBounds.top + 10,
+        };
+      });
+    };
+
+    const render = (timestamp: number) => {
+      if (timestamp - lastFrame < FRAME_INTERVAL) {
+        animationFrame = requestAnimationFrame(render);
+        return;
+      }
+      lastFrame = timestamp;
+      context.clearRect(0, 0, width, height);
+
+      const time = reducedMotion ? 0 : timestamp / 1000;
+      const imageX = ((time * 70) % (width * 1.55)) - width * 0.28;
+      const imageY = height * (0.36 + Math.sin(time * 0.24) * 0.06);
+
+      for (let y = 0; y < height; y += CELL) {
+        for (let x = 0; x < width; x += CELL) {
+          const movingNoise = fbm(
+            x / FEATURE - time * 0.06,
+            y / FEATURE + Math.sin(time * 0.18) * 0.2,
+            3.4,
+          );
+          const dx = (x - imageX) / (width * 0.2);
+          const dy = (y - imageY) / (height * 0.3);
+          const silhouette = Math.exp(-(dx * dx + dy * dy) * 1.2);
+          const contour = clamp(1 - Math.abs(Math.hypot(dx, dy) - 0.62) * 4.5);
+          const shading = clamp((movingNoise - 0.28) / 0.46);
+          const protection = protectionAt(x, y, protectedAreas);
+          const luminance =
+            clamp(shading * 0.38 + silhouette * shading * 0.72 + contour * 0.18) *
+            (1 - protection * 0.94);
+          const grain = hash(x / CELL, y / CELL, 8.1);
+
+          if (luminance < 0.07 || grain > 0.54 + luminance * 0.4) continue;
+          drawGlyph(context, x, y, luminance, grain);
+        }
+      }
+
+      visibleContext.setTransform(1, 0, 0, 1, 0, 0);
+      visibleContext.clearRect(0, 0, canvas.width, canvas.height);
+      visibleContext.drawImage(buffer, 0, 0);
+
+      if (!reducedMotion) animationFrame = requestAnimationFrame(render);
     };
 
     const observer = new ResizeObserver(() => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(draw);
+      resize();
+      if (reducedMotion) render(0);
     });
-    observer.observe(element);
-    draw();
+    observer.observe(container);
+    resize();
+    animationFrame = requestAnimationFrame(render);
 
     return () => {
       observer.disconnect();
-      cancelAnimationFrame(frame);
+      cancelAnimationFrame(animationFrame);
     };
   }, []);
 
   return (
-    <div ref={ref} aria-hidden className="pricing-pixel-noise">
-      <div ref={baseRef} className="pricing-pixel-noise__layer pricing-pixel-noise__base" />
-      <div ref={waveRef} className="pricing-pixel-noise__layer pricing-pixel-noise__wave" />
+    <div ref={containerRef} aria-hidden className="pixel-noise-field">
+      <canvas ref={canvasRef} className="pixel-noise-field__canvas" />
     </div>
   );
 }

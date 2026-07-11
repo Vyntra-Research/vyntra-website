@@ -233,92 +233,51 @@
     color: var(--color-ink);
   }
 
-  /* Brand illustration used as a quiet section watermark */
-  .cicada-watermark {
+  .pixel-noise-field {
     position: absolute;
-    top: 50%;
-    right: clamp(-8rem, -3vw, -2rem);
-    width: clamp(22rem, 40vw, 38rem);
-    aspect-ratio: 556 / 850;
-    transform: translateY(-48%) rotate(3deg);
-    background: var(--color-ink);
-    opacity: 0.05;
-    -webkit-mask: url("/assets/vyntra/vyntra-cicada-logo-sharp.svg") center / contain no-repeat;
-    mask: url("/assets/vyntra/vyntra-cicada-logo-sharp.svg") center / contain no-repeat;
-  }
-
-  @property --pixel-wave-x {
-    syntax: "<percentage>";
-    inherits: false;
-    initial-value: -30%;
-  }
-  .pricing-pixel-noise {
-    position: absolute;
-    inset: 0 0 auto;
-    height: clamp(30rem, 54vw, 43rem);
+    inset: 0;
     pointer-events: none;
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 56%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 56%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
   }
-  .pricing-pixel-noise::after {
-    content: "";
+  .pixel-noise-field__canvas {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 38% 42% at 66% 34%, transparent 0%, rgba(0, 0, 0, 0.52) 52%, #000 100%);
-  }
-  .pricing-pixel-noise__layer {
-    position: absolute;
-    inset: 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-  }
-  .pricing-pixel-noise__base {
-    opacity: 0.48;
-  }
-  .pricing-pixel-noise__wave {
-    --pixel-wave-x: -30%;
-    opacity: 0.85;
-    -webkit-mask-image: radial-gradient(ellipse 26% 82% at var(--pixel-wave-x) 42%, #000 0%, rgba(0, 0, 0, 0.7) 44%, transparent 100%);
-    mask-image: radial-gradient(ellipse 26% 82% at var(--pixel-wave-x) 42%, #000 0%, rgba(0, 0, 0, 0.7) 44%, transparent 100%);
-    animation: pricing-pixel-wave 8s linear infinite;
-  }
-  @keyframes pricing-pixel-wave {
-    to {
-      --pixel-wave-x: 130%;
-    }
+    display: block;
   }
 
   .attack-path-illustration {
     position: absolute;
     top: 50%;
-    right: clamp(-11rem, -4vw, -2rem);
-    width: clamp(34rem, 58vw, 54rem);
+    right: clamp(-5rem, -2vw, -1rem);
+    width: clamp(28rem, 43vw, 42rem);
+    aspect-ratio: 1;
     color: var(--color-ink);
-    opacity: 0.065;
+    opacity: 0.14;
     transform: translateY(-50%) rotate(-3deg);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 32%, #000 100%);
-    mask-image: linear-gradient(to right, transparent 0%, #000 32%, #000 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 100%);
+  }
+  .attack-path-illustration svg {
+    width: 100%;
+    height: 100%;
+  }
+  .attack-path-illustration svg * {
+    vector-effect: non-scaling-stroke;
   }
 
   @media (max-width: 767px) {
     .signal-field--section {
       height: 38rem;
     }
-    .cicada-watermark {
-      right: -11rem;
-      width: 26rem;
-      opacity: 0.035;
-    }
-    .pricing-pixel-noise {
-      height: 34rem;
+    .pixel-noise-field {
       opacity: 0.75;
     }
     .attack-path-illustration {
-      right: -25rem;
-      width: 46rem;
-      opacity: 0.05;
+      right: -18rem;
+      width: 34rem;
+      opacity: 0.095;
     }
   }
 
@@ -391,9 +350,6 @@
       animation: none;
     }
     .signal-field__scan {
-      animation: none;
-    }
-    .pricing-pixel-noise__wave {
       animation: none;
     }
   }

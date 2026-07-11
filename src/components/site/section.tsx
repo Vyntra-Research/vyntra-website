@@ -39,12 +39,14 @@ export function SectionHeader({
   title,
   children,
   layout = "split",
+  protectMarkerFromNoise = false,
 }: {
   index: string;
   eyebrow: string;
   title: React.ReactNode;
   children?: React.ReactNode;
   layout?: "split" | "stacked";
+  protectMarkerFromNoise?: boolean;
 }) {
   return (
     <div
@@ -56,7 +58,10 @@ export function SectionHeader({
       )}
     >
       <div className="flex flex-col gap-3">
-        <div className="section-coordinate flex items-center gap-3">
+        <div
+          className="section-coordinate flex items-center gap-3"
+          data-noise-protection={protectMarkerFromNoise ? "" : undefined}
+        >
           <span className="section-coordinate__index text-xs tabular-nums">{index}</span>
           <span className="eyebrow">{eyebrow}</span>
         </div>

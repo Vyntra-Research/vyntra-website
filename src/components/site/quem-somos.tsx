@@ -1,20 +1,24 @@
 import { Container, Section, SectionHeader } from "./section";
 import { Reveal } from "./reveal";
 import { Highlight } from "./highlight";
+import { PixelNoiseField } from "./pixel-noise-field";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { sectionId, type Locale } from "@/i18n/config";
 
 export function QuemSomos({ t, lang }: { t: Dictionary["quemSomos"]; lang: Locale }) {
   return (
     <Section id={sectionId(lang, "about")} className="overflow-hidden">
-      <div aria-hidden className="cicada-watermark" />
+      <PixelNoiseField />
       <Container className="relative z-10 py-20 md:py-28">
         <SectionHeader index={t.index} eyebrow={t.eyebrow} title={
           <>
             {t.titlePre} <Highlight>{t.titleHighlight}</Highlight> {t.titlePost}
           </>
-        }>
-          <p className="max-w-xl text-sm leading-relaxed text-ink-dim">
+        } protectMarkerFromNoise>
+          <p
+            className="max-w-xl text-sm leading-relaxed text-ink-dim"
+            data-noise-protection
+          >
             {t.subhead}
           </p>
         </SectionHeader>

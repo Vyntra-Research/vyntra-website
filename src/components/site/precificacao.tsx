@@ -2,14 +2,12 @@ import { Container, Section, SectionHeader } from "./section";
 import { Reveal } from "./reveal";
 import { HexButton } from "./hex-button";
 import { Highlight } from "./highlight";
-import { PixelNoiseField } from "./pixel-noise-field";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { sectionId, type Locale } from "@/i18n/config";
 
 export function Precificacao({ t, lang }: { t: Dictionary["precificacao"]; lang: Locale }) {
   return (
     <Section id={sectionId(lang, "pricing")} className="overflow-hidden">
-      <PixelNoiseField />
       <Container className="relative z-10 py-20 md:py-28">
         <SectionHeader index={t.index} eyebrow={t.eyebrow} title={
           <>
