@@ -2,16 +2,17 @@ import { Container, Section } from "./section";
 import { HexButton } from "./hex-button";
 import { Reveal } from "./reveal";
 import { Highlight } from "./highlight";
+import { AttackPathIllustration } from "./attack-path-illustration";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { sectionId, type Locale } from "@/i18n/config";
 
 export function CtaFinal({ t, lang }: { t: Dictionary["ctaFinal"]; lang: Locale }) {
   return (
-    <Section id={sectionId(lang, "start")} className="border-b border-line">
-      <Container className="flex flex-col items-start gap-10 py-24 md:py-36">
+    <Section id={sectionId(lang, "start")} className="overflow-hidden border-b border-line">
+      <AttackPathIllustration />
+      <Container className="relative z-10 flex flex-col items-start gap-10 py-24 md:py-36">
         <Reveal>
           <div className="flex items-center gap-3">
-            <span aria-hidden className="section-coordinate__node" />
             <span className="section-coordinate__index text-xs tabular-nums">{t.index}</span>
             <span className="eyebrow">{t.eyebrow}</span>
           </div>

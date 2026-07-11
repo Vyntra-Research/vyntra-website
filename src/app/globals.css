@@ -119,15 +119,6 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cpath d='M18 14.5v7M14.5 18h7' fill='none' stroke='%23fff' stroke-width='.8'/%3E%3C/svg%3E");
     background-size: 36px 36px;
   }
-  .signal-field--pixel .signal-field__base {
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.42) 0 0.65px, transparent 0.8px);
-    background-size: 7px 7px;
-  }
-  .signal-field--pixel .signal-field__hot,
-  .signal-field--pixel .signal-field__scan {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cg fill='none' stroke='%23fff' stroke-width='.75'%3E%3Cpath d='M7 4.5v5M4.5 7h5M18.5 18.5l5 5m0-5l-5 5'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 28px 28px;
-  }
   .signal-field__base {
     opacity: 0.12;
   }
@@ -170,11 +161,6 @@
   .signal-field--plus .signal-field__scan {
     opacity: 0.08;
   }
-  .signal-field--hero {
-    inset: 7% 0 0 38%;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 34%, #000 100%);
-    mask-image: linear-gradient(to right, transparent 0%, #000 34%, #000 100%);
-  }
   .signal-field--section {
     inset: 0 0 auto 0;
     height: min(520px, 70%);
@@ -191,7 +177,6 @@
   .section-coordinate {
     min-height: 1.75rem;
   }
-  .section-coordinate__node,
   .signal-node {
     position: relative;
     display: inline-block;
@@ -199,37 +184,26 @@
     height: 0.7rem;
     flex: 0 0 auto;
   }
-  .section-coordinate__node::before,
-  .section-coordinate__node::after,
   .signal-node::before,
   .signal-node::after {
     content: "";
     position: absolute;
     background: currentColor;
   }
-  .section-coordinate__node::before,
   .signal-node::before {
     left: 0;
     right: 0;
     top: calc(50% - 0.5px);
     height: 1px;
   }
-  .section-coordinate__node::after,
   .signal-node::after {
     top: 0;
     bottom: 0;
     left: calc(50% - 0.5px);
     width: 1px;
   }
-  .section-coordinate__node {
-    color: var(--color-ink-dim);
-  }
   .section-coordinate__index {
-    border: 1px solid var(--color-line-strong);
     color: var(--color-ink-dim);
-    min-width: 2.1rem;
-    padding: 0.22rem 0.35rem;
-    text-align: center;
   }
   .signal-card {
     position: relative;
@@ -268,75 +242,83 @@
     aspect-ratio: 556 / 850;
     transform: translateY(-48%) rotate(3deg);
     background: var(--color-ink);
-    opacity: 0.026;
+    opacity: 0.05;
     -webkit-mask: url("/assets/vyntra/vyntra-cicada-logo-sharp.svg") center / contain no-repeat;
     mask: url("/assets/vyntra/vyntra-cicada-logo-sharp.svg") center / contain no-repeat;
   }
 
-  .scope-watermark {
-    position: absolute;
-    top: 2.5rem;
-    right: clamp(-9rem, -4vw, -3rem);
-    width: clamp(24rem, 39vw, 38rem);
-    aspect-ratio: 1;
-    color: var(--color-ink);
-    opacity: 0.04;
-    transform: rotate(-4deg);
+  @property --pixel-wave-x {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: -30%;
   }
-  .scope-watermark__frame,
-  .scope-watermark__axis {
+  .pricing-pixel-noise {
     position: absolute;
-    display: block;
+    inset: 0 0 auto;
+    height: clamp(30rem, 54vw, 43rem);
+    pointer-events: none;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 56%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 56%, transparent 100%);
   }
-  .scope-watermark__frame {
-    border: 1px solid currentColor;
+  .pricing-pixel-noise::after {
+    content: "";
+    position: absolute;
     inset: 0;
+    background: radial-gradient(ellipse 38% 42% at 66% 34%, transparent 0%, rgba(0, 0, 0, 0.52) 52%, #000 100%);
   }
-  .scope-watermark__frame--middle {
-    inset: 18%;
-  }
-  .scope-watermark__frame--inner {
-    inset: 36%;
-  }
-  .scope-watermark__axis--x {
-    top: 50%;
-    left: -8%;
-    width: 116%;
-    height: 1px;
-    background: currentColor;
-  }
-  .scope-watermark__axis--y {
-    top: -8%;
-    left: 50%;
-    width: 1px;
-    height: 116%;
-    background: currentColor;
-  }
-  .scope-watermark__origin {
+  .pricing-pixel-noise__layer {
     position: absolute;
-    top: calc(50% - 0.35rem);
-    left: calc(50% - 0.35rem);
-    color: currentColor;
+    inset: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  .pricing-pixel-noise__base {
+    opacity: 0.48;
+  }
+  .pricing-pixel-noise__wave {
+    --pixel-wave-x: -30%;
+    opacity: 0.85;
+    -webkit-mask-image: radial-gradient(ellipse 26% 82% at var(--pixel-wave-x) 42%, #000 0%, rgba(0, 0, 0, 0.7) 44%, transparent 100%);
+    mask-image: radial-gradient(ellipse 26% 82% at var(--pixel-wave-x) 42%, #000 0%, rgba(0, 0, 0, 0.7) 44%, transparent 100%);
+    animation: pricing-pixel-wave 8s linear infinite;
+  }
+  @keyframes pricing-pixel-wave {
+    to {
+      --pixel-wave-x: 130%;
+    }
+  }
+
+  .attack-path-illustration {
+    position: absolute;
+    top: 50%;
+    right: clamp(-11rem, -4vw, -2rem);
+    width: clamp(34rem, 58vw, 54rem);
+    color: var(--color-ink);
+    opacity: 0.065;
+    transform: translateY(-50%) rotate(-3deg);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 32%, #000 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 32%, #000 100%);
   }
 
   @media (max-width: 767px) {
-    .signal-field--hero {
-      inset: 10% -30% 0 18%;
-      opacity: 0.65;
-    }
     .signal-field--section {
       height: 38rem;
     }
     .cicada-watermark {
       right: -11rem;
       width: 26rem;
-      opacity: 0.02;
+      opacity: 0.035;
     }
-    .scope-watermark {
-      top: 5rem;
-      right: -13rem;
-      width: 28rem;
-      opacity: 0.03;
+    .pricing-pixel-noise {
+      height: 34rem;
+      opacity: 0.75;
+    }
+    .attack-path-illustration {
+      right: -25rem;
+      width: 46rem;
+      opacity: 0.05;
     }
   }
 
@@ -409,6 +391,9 @@
       animation: none;
     }
     .signal-field__scan {
+      animation: none;
+    }
+    .pricing-pixel-noise__wave {
       animation: none;
     }
   }

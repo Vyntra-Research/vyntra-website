@@ -38,17 +38,25 @@ export function SectionHeader({
   eyebrow,
   title,
   children,
+  layout = "split",
 }: {
   index: string;
   eyebrow: string;
   title: React.ReactNode;
   children?: React.ReactNode;
+  layout?: "split" | "stacked";
 }) {
   return (
-    <div className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-12">
+    <div
+      className={cn(
+        "grid gap-8",
+        layout === "split"
+          ? "md:grid-cols-[0.8fr_1.2fr] md:gap-12"
+          : "max-w-3xl",
+      )}
+    >
       <div className="flex flex-col gap-3">
         <div className="section-coordinate flex items-center gap-3">
-          <span aria-hidden className="section-coordinate__node" />
           <span className="section-coordinate__index text-xs tabular-nums">{index}</span>
           <span className="eyebrow">{eyebrow}</span>
         </div>

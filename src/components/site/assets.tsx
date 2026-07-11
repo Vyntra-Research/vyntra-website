@@ -8,7 +8,7 @@ export function Assets({ t }: { t: Dictionary["assets"] }) {
     <Section id="assets" className="overflow-hidden">
       <SignalField variant="plus" className="signal-field--section" />
       <Container className="relative z-10 py-20 md:py-28">
-        <SectionHeader index={t.index} eyebrow={t.eyebrow} title={t.title}>
+        <SectionHeader index={t.index} eyebrow={t.eyebrow} title={t.title} layout="stacked">
           <p className="max-w-xl text-sm leading-relaxed text-ink-dim">
             {t.intro}
           </p>
