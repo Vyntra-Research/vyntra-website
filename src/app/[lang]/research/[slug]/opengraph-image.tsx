@@ -84,7 +84,7 @@ export default async function OpengraphImage({
             }}
           />
           <div style={{ fontSize: 22, color: "#9a9a9a" }}>
-            {post?.author ? `@${post.author}` : "vyntra.security"}
+            {post?.author ? `@${post.author}` : "vyntra.sh"}
           </div>
         </div>
       </div>

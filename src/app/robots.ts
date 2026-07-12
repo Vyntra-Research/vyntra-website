@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/"],
     },
-    sitemap: "https://vyntra.security/sitemap.xml",
-    host: "https://vyntra.security",
+    sitemap: "https://vyntra.sh/sitemap.xml",
+    host: "https://vyntra.sh",
   };
 }

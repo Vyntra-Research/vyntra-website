@@ -3,7 +3,7 @@ import { getAllPosts } from "@/lib/research";
 import { locales, type Locale } from "@/i18n/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://vyntra.security";
+  const base = "https://vyntra.sh";
   const now = new Date();
   const entries: MetadataRoute.Sitemap = [];
 

@@ -11,7 +11,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vyntra.security"),
+  metadataBase: new URL("https://vyntra.sh"),
   title: "Vyntra Security — Pentest de alto nível, acessível e prático",
   description:
     "Pentest com a profundidade de quem descobre falhas e CVEs em grandes empresas, aplicado ao seu escopo. Acessível, transparente e com preço previsível.",

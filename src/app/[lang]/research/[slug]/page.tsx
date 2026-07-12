@@ -28,7 +28,7 @@ export async function generateMetadata({
   const post = getPostBySlug(slug, locale);
   if (!post) return { title: "Not found — Vyntra Research" };
 
-  const url = `https://vyntra.security/${locale}/research/${post.slug}`;
+  const url = `https://vyntra.sh/${locale}/research/${post.slug}`;
   return {
     title: `${post.title} — Vyntra Research`,
     description: post.subtitle || post.title,
@@ -88,7 +88,7 @@ export default async function ArticlePage({
     dateModified: post.date ?? undefined,
     author: post.author ? { "@type": "Person", name: post.author } : undefined,
     publisher: { "@type": "Organization", name: "Vyntra Security" },
-    mainEntityOfPage: `https://vyntra.security/${locale}/research/${post.slug}`,
+    mainEntityOfPage: `https://vyntra.sh/${locale}/research/${post.slug}`,
   };
 
   return (
